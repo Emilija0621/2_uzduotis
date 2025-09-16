@@ -2,6 +2,7 @@
 #include<iomanip>
 #include<vector>
 #include<string>
+#include<algorithm>
 
 
 using std::cout;
@@ -13,6 +14,9 @@ using std::setw;
 using std::left;
 using std::right;
 using std::string;
+using std::fixed;
+using std::setprecision;
+using std::sort;
 
 
 struct studentas{
@@ -20,13 +24,15 @@ struct studentas{
     string pavarde;
     vector<int> pazymiai;
     int egzamino_pazymys;
-    double galutinis_pazymys;
+    double galutinis_vidurkis;
+    double galutinis_mediana;
 };
 
 
 studentas studentas_ivestis();
+double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana = false);
+double skaiciuoti_mediana(vector<int> pazymiai);
 double skaiciuoti_vidurki(const vector<int>& pazymiai);
-double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas);
 
 
 int main() {
@@ -36,20 +42,42 @@ int main() {
     
     for (auto z=0; z<m; z++){
         grupe.push_back(studentas_ivestis());
-    };
+    }
+    
+    int pasirinkimas;
+    cout << "Pasirinkite kaip noresite skaiciuoti galutini ivertininima" << endl;
+    cout << "1 - su vidurkiu \n2 - su mediana\n3 - noriu gauti abejais budais suskaiciuotus ivertinimus" << endl;
+    cin >> pasirinkimas;
     
     for (auto &s : grupe) {
-        s.galutinis_pazymys = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys);
-    };
-        
-    cout << "Studentu informacija: " << endl;
-    cout << setw(10) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Vid.) " << endl;
-    cout << string(46, '-') << endl;
+        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
+        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
+    }
     
-    for (auto past: grupe){
-        cout << setw(10) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-        cout << setw(10) << past.galutinis_pazymys << endl;
-    };
+    cout << "Studentu informacija: " << endl;
+    
+    if (pasirinkimas == 1){
+        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
+        cout << string(46, '-') << endl;
+        for (auto past: grupe){
+            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+            cout << setw(14) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
+        }
+    } else if (pasirinkimas == 2) {
+        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
+        cout << string(46, '-') << endl;
+        for (auto past: grupe){
+            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+            cout << setw(14) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+        }
+    } else {
+        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Vid.)" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
+        cout << string(50, '-') << endl;
+        for (auto past: grupe){
+            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(10) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+        }
+    }
 };
 
 
@@ -66,7 +94,7 @@ studentas studentas_ivestis(){
         cout << a + 1 << ": ";
         cin >> laikinas_paz;
         pirmas.pazymiai.push_back(laikinas_paz);
-    };
+    }
     
     cout << "Iveskite egzamino pazymi: "; cin >> pirmas.egzamino_pazymys;
     return pirmas;
@@ -78,12 +106,32 @@ double skaiciuoti_vidurki(const vector<int>& pazymiai){
     double suma = 0;
     for (auto paz: pazymiai){
         suma += paz;
-    };
+    }
     return suma / pazymiai.size();
 };
 
 
-double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas){
-    double vidurkis = skaiciuoti_vidurki(pazymiai);
-    return 0.4 * vidurkis + 0.6 * egzaminas;
+double skaiciuoti_mediana(vector<int> pazymiai){
+    if (pazymiai.empty()) return 0;
+    sort(pazymiai.begin(), pazymiai.end());
+    auto n = pazymiai.size();
+    
+    if (n % 2 == 1) {
+            return pazymiai[n / 2];
+        } else {
+            return (pazymiai[n / 2 - 1] + pazymiai[n / 2]) / 2.0;
+        }
+
 };
+
+
+double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana){
+    double galutinis = 0;
+    if (naudoti_mediana){
+        galutinis = skaiciuoti_mediana(pazymiai) * 0.4 + egzaminas * 0.6;
+    } else {
+        galutinis = skaiciuoti_vidurki(pazymiai) * 0.4 + egzaminas * 0.6;
+    }
+    return galutinis;
+};
+
