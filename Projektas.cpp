@@ -5,6 +5,8 @@
 #include<algorithm>
 #include<random>
 #include<cctype>
+#include<fstream>
+#include<sstream>
 
 using std::cout;
 using std::cin;
@@ -21,6 +23,9 @@ using std::random_device;
 using std::mt19937;
 using std::uniform_int_distribution;
 using std::invalid_argument;
+using std::ifstream;
+using std::getline;
+using std::istringstream;
 
 
 struct studentas{
@@ -38,6 +43,7 @@ double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, 
 double skaiciuoti_mediana(vector<int> pazymiai);
 double skaiciuoti_vidurki(const vector<int>& pazymiai);
 int generuoti_atsitiktini_bala();
+void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe);
 
 
 int main() {
@@ -52,19 +58,20 @@ int main() {
                 cout << "2 - Įvesti vardą ir pavardę, bet pažymius generuoti atsitiktinai" << endl;
                 cout << "3 - Spausdinti studentų rezultatus" << endl;
                 cout << "4 - Išeiti" << endl;
+                cout << "5 - Nuskaityti studentų duomenis iš failo" << endl;
 
                 string ivestis;
                 cin >> ivestis;
 
                 try {
                     pasirinkimas1 = stoi(ivestis);
-                    if (pasirinkimas1 < 1 || pasirinkimas1 > 4) {
-                        cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 4." << endl;
+                    if (pasirinkimas1 < 1 || pasirinkimas1 > 5) {
+                        cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 5." << endl;
                         continue;
                     }
                     break;
                 } catch (const invalid_argument&) {
-                    cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 4." << endl;
+                    cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 5." << endl;
                 }
             }
         
@@ -141,6 +148,12 @@ int main() {
         } else if (pasirinkimas1 == 4) {
             cout << "Programa baigta." << endl;
             break;
+            
+        } else if (pasirinkimas1 == 5){
+            cout << "Įveskite failo pavadinimą: ";
+            string failas;
+            cin >> failas;
+            nuskaityti_duomenis_is_failo(failas, grupe);
             
         } else {
             cout << "Neteisingas pasirinkimas." << endl;
@@ -293,3 +306,51 @@ int generuoti_atsitiktini_bala(){
     return dis(gen);
 }
 
+void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe){
+    ifstream in(failo_pavadinimas);
+    
+    if(!in.is_open()){
+        cout << "Nepavyko atidaryti failo." << failo_pavadinimas << endl;
+        return;
+    }
+    
+    string eilute;
+    
+    if(!getline(in, eilute)){
+        cout << "Failas " << failo_pavadinimas << "tuščias arba netinkamas" << endl;
+        return;
+    }
+    
+    istringstream antraste(eilute);
+    vector<string> stulpeliai;
+    string stulp;
+    while (antraste >> stulp) stulpeliai.push_back(stulp);
+    
+    size_t nd_kiekis = stulpeliai.size() - 3;
+    
+    while (getline(in, eilute)){
+        if (eilute.empty()) continue;
+        istringstream iss(eilute);
+        studentas duomenys;
+        iss >> duomenys.vardas >> duomenys.pavarde;
+        
+        duomenys.pazymiai.clear();
+        for (size_t i = 0; i < nd_kiekis; i++){
+            int nd;
+            if (!(iss >> nd)) {
+                cout << "Klaida skaitant ND eilutėje: " << eilute << endl;
+                return;
+            }
+            duomenys.pazymiai.push_back(nd);
+        }
+        
+        if (!(iss >> duomenys.egzamino_pazymys)) {
+            cout << "Klaida skaitant egzamino pažymį eilutėje: " << eilute << endl;
+            return;
+        }
+        grupe.push_back(duomenys);
+    }
+    
+    cout << "Duomenys sėkmingai nuskaityti iš failo." << endl;
+
+}
