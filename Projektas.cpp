@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include<algorithm>
+#include<random>
 
 
 using std::cout;
@@ -17,6 +18,10 @@ using std::string;
 using std::fixed;
 using std::setprecision;
 using std::sort;
+using std::random_device;
+using std::mt19937;
+using std::uniform_int_distribution;
+
 
 
 struct studentas{
@@ -29,80 +34,112 @@ struct studentas{
 };
 
 
-studentas studentas_ivestis();
+studentas studentas_ivestis(bool atsitiktiniai_balai);
 double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana = false);
 double skaiciuoti_mediana(vector<int> pazymiai);
 double skaiciuoti_vidurki(const vector<int>& pazymiai);
+int generuoti_atsitiktini_bala();
 
 
 int main() {
     vector <studentas> grupe;
-    int m;
-    cout << "Kiek studentu yra grupeje? "; cin >> m;
+    int pasirinkimas1;
     
-    for (auto z=0; z<m; z++){
-        grupe.push_back(studentas_ivestis());
-    }
-    
-    int pasirinkimas;
-    cout << "Pasirinkite kaip noresite skaiciuoti galutini ivertininima" << endl;
-    cout << "1 - su vidurkiu \n2 - su mediana\n3 - noriu gauti abejais budais suskaiciuotus ivertinimus" << endl;
-    cin >> pasirinkimas;
-    
-    for (auto &s : grupe) {
-        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
-        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
-    }
-    
-    cout << "Studentu informacija: " << endl;
-    
-    if (pasirinkimas == 1){
-        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
-        cout << string(46, '-') << endl;
-        for (auto past: grupe){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(14) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
+    while (true) {
+        cout << "Pasirinkite veiksmą:\n";
+        cout << "1 - Įvesti studenta su turimais duomenimis\n";
+        cout << "2 - Įvesti vardą ir pavardę, bet balus generuoti atsitiktinai\n";
+        cout << "3 - Spausdinti studentų rezultatus\n";
+        cout << "4 - Išeiti\n";
+        cin >> pasirinkimas1;
+        
+        if (pasirinkimas1 == 1) {
+            grupe.push_back(studentas_ivestis(false));
+        } else if (pasirinkimas1 == 2){
+            grupe.push_back(studentas_ivestis(true));
+        } else if (pasirinkimas1 == 3){
+            
+            if (grupe.empty()) {
+                    cout << "Studentų duomenų dar nėra.\n";
+                    continue;
+                }
+            
+            int pasirinkimas;
+            cout << "Pasirinkite kaip noresite skaiciuoti galutini ivertininima" << endl;
+            cout << "1 - su vidurkiu \n2 - su mediana\n3 - noriu gauti abejais budais suskaiciuotus ivertinimus" << endl;
+            cin >> pasirinkimas;
+            
+            for (auto &s : grupe) {
+                s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
+                s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
+            }
+            
+            cout << "Studentu informacija: " << endl;
+            
+            if (pasirinkimas == 1){
+                cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
+                cout << string(46, '-') << endl;
+                for (auto past: grupe){
+                    cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+                    cout << setw(14) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
+                }
+            } else if (pasirinkimas == 2) {
+                cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
+                cout << string(46, '-') << endl;
+                for (auto past: grupe){
+                    cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+                    cout << setw(14) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+                }
+            } else if (pasirinkimas == 3){
+                cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Vid.)" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
+                cout << string(55, '-') << endl;
+                for (auto past: grupe){
+                    cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
+                    cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(10) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+                }
+            }
+        } else if (pasirinkimas1 == 4) {
+            cout << "Programa baigta.\n";
+            break;
+        } else {
+            cout << "Neteisingas pasirinkimas.\n";
         }
-    } else if (pasirinkimas == 2) {
-        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
-        cout << string(46, '-') << endl;
-        for (auto past: grupe){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(14) << fixed << setprecision(2) << past.galutinis_mediana << endl;
-        }
-    } else {
-        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavarde" << "|" << setw(5) << left << "Galutinis (Vid.)" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
-        cout << string(55, '-') << endl;
-        for (auto past: grupe){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(10) << fixed << setprecision(2) << past.galutinis_mediana << endl;
-        }
     }
-};
+}
 
 
-studentas studentas_ivestis(){
+
+studentas studentas_ivestis(bool atsitiktiniai_balai){
     string ivestis;
-    cout << "Sveiki!" << endl;
     studentas pirmas;
+    cout << "Sveiki!" << endl;
     cout << "Iveskite studento duomenis." << endl;
     cout << "Vardas: "; cin >> pirmas.vardas;
     cout << "Pavarde: "; cin >> pirmas.pavarde;
-    
-    cout << "Iveskite studento pazymius (parasykite baigta, kai baigete)"<< endl;
-    while (true){
-        cout << pirmas.pazymiai.size() + 1 << ". ";
-        cin >> ivestis;
-        if (ivestis == "baigta"){
-            break;
+
+    if (atsitiktiniai_balai){
+        int kiek;
+        cout << "Kiek norite sugeneruoti pazymiu?" << endl; cin >> kiek;
+        for (int i=0; i<kiek; i++){
+            pirmas.pazymiai.push_back(generuoti_atsitiktini_bala());
         }
-        int konvertuota = stoi(ivestis);
-        pirmas.pazymiai.push_back(konvertuota);
+        pirmas.egzamino_pazymys = generuoti_atsitiktini_bala();
+    } else {
+        cout << "Iveskite studento pazymius (parasykite baigta, kai baigete)"<< endl;
+        while (true){
+            cout << pirmas.pazymiai.size() + 1 << ". ";
+            cin >> ivestis;
+            if (ivestis == "baigta"){
+                break;
+            }
+            int konvertuota = stoi(ivestis);
+            pirmas.pazymiai.push_back(konvertuota);
+        }
+        
+        cout << "Iveskite egzamino pazymi: "; cin >> pirmas.egzamino_pazymys;
     }
-    
-    cout << "Iveskite egzamino pazymi: "; cin >> pirmas.egzamino_pazymys;
     return pirmas;
-};
+}
 
 
 double skaiciuoti_vidurki(const vector<int>& pazymiai){
@@ -112,7 +149,7 @@ double skaiciuoti_vidurki(const vector<int>& pazymiai){
         suma += paz;
     }
     return suma / pazymiai.size();
-};
+}
 
 
 double skaiciuoti_mediana(vector<int> pazymiai){
@@ -125,8 +162,7 @@ double skaiciuoti_mediana(vector<int> pazymiai){
         } else {
             return (pazymiai[n / 2 - 1] + pazymiai[n / 2]) / 2.0;
         }
-
-};
+}
 
 
 double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana){
@@ -137,7 +173,15 @@ double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, 
         galutinis = skaiciuoti_vidurki(pazymiai) * 0.4 + egzaminas * 0.6;
     }
     return galutinis;
-};
+}
+
+
+int generuoti_atsitiktini_bala(){
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 10);
+    return dis(gen);
+}
 
 
 
