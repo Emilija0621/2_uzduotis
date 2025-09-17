@@ -14,7 +14,6 @@ using std::vector;
 using std::setw;
 using std::left;
 using std::right;
-using std::string;
 using std::fixed;
 using std::setprecision;
 using std::sort;
@@ -22,7 +21,6 @@ using std::random_device;
 using std::mt19937;
 using std::uniform_int_distribution;
 using std::invalid_argument;
-
 
 
 struct studentas{
@@ -50,7 +48,7 @@ int main() {
             
             while (true) {
                 cout << "Pasirinkite veiksmą: " << endl;
-                cout << "1 - Įvesti studenta su turimais duomenimis" << endl;
+                cout << "1 - Įvesti studentą su turimais duomenimis" << endl;
                 cout << "2 - Įvesti vardą ir pavardę, bet pažymius generuoti atsitiktinai" << endl;
                 cout << "3 - Spausdinti studentų rezultatus" << endl;
                 cout << "4 - Išeiti" << endl;
@@ -61,7 +59,7 @@ int main() {
                 try {
                     pasirinkimas1 = stoi(ivestis);
                     if (pasirinkimas1 < 1 || pasirinkimas1 > 4) {
-                        cout << "Neteisingas pasirinkimas. Bandykite dar kartą." << endl;
+                        cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 4." << endl;
                         continue;
                     }
                     break;
@@ -93,26 +91,26 @@ int main() {
 
                 try {
                     pasirinkimas = stoi(ivestis);
-
                     if (pasirinkimas < 1 || pasirinkimas > 3) {
-                        cout << "Neteisingas pasirinkimas. Bandykite dar kartą." << endl;
+                        cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 3." << endl;
                         continue;
                     }
-
                     break;
-
                 } catch (const invalid_argument&) {
                     cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 3." << endl;
                 }
             }
 
-            
             for (auto &s : grupe) {
                 s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
                 s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
             }
             
             cout << "Studentų informacija: " << endl;
+            
+            sort(grupe.begin(), grupe.end(), [](auto &a, auto &b){
+                return a.vardas < b.vardas;
+            });
             
             if (pasirinkimas == 1){
                 cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
@@ -149,7 +147,6 @@ int main() {
         }
     }
 }
-
 
 
 studentas studentas_ivestis(bool atsitiktiniai_balai){
@@ -194,12 +191,10 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
 
             try {
                 kiek = stoi(ivestis);
-
                 if (kiek < 1) {
                     cout << "Turi būti teigiamas skaičius. Bandykite dar kartą." << endl;
                     continue;
                 }
-
                 break;
             } catch (const invalid_argument&) {
                 cout << "Įvesta netinkama reikšmė. Įveskite skaičių." << endl;
@@ -221,17 +216,13 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
                 if (ivestis == "baigta"){
                     break;
                 }
-                
                 try {
                     int konvertuota = stoi(ivestis);
-
                     if (konvertuota < 1 || konvertuota > 10) {
                         cout << "Balas turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
                         continue;
                     }
-
                     pirmas.pazymiai.push_back(konvertuota);
-
                 } catch (const invalid_argument&) {
                     cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10 arba 'baigta'." << endl;
                 }
@@ -244,15 +235,12 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
 
                 try {
                     int egzaminas = stoi(ivestis);
-
                     if (egzaminas < 1 || egzaminas > 10) {
                         cout << "Egzamino pažymys turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
                         continue;
                     }
-
                     pirmas.egzamino_pazymys = egzaminas;
-                    break; 
-
+                    break;
                 } catch (const invalid_argument&) {
                     cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10." << endl;
                 }
@@ -288,6 +276,7 @@ double skaiciuoti_mediana(vector<int> pazymiai){
 
 double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana){
     double galutinis = 0;
+    
     if (naudoti_mediana){
         galutinis = skaiciuoti_mediana(pazymiai) * 0.4 + egzaminas * 0.6;
     } else {
@@ -303,5 +292,4 @@ int generuoti_atsitiktini_bala(){
     uniform_int_distribution<> dis(1, 10);
     return dis(gen);
 }
-
 
