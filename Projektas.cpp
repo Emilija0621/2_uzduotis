@@ -57,8 +57,8 @@ int main() {
                 cout << "1 - Įvesti studentą su turimais duomenimis" << endl;
                 cout << "2 - Įvesti vardą ir pavardę, bet pažymius generuoti atsitiktinai" << endl;
                 cout << "3 - Spausdinti studentų rezultatus" << endl;
-                cout << "4 - Išeiti" << endl;
-                cout << "5 - Nuskaityti studentų duomenis iš failo" << endl;
+                cout << "4 - Nuskaityti studentų duomenis iš failo" << endl;
+                cout << "5 - Išeiti" << endl;
 
                 string ivestis;
                 cin >> ivestis;
@@ -145,11 +145,7 @@ int main() {
                 
             }
             
-        } else if (pasirinkimas1 == 4) {
-            cout << "Programa baigta." << endl;
-            break;
-            
-        } else if (pasirinkimas1 == 5){
+        } else if (pasirinkimas1 == 4){
             cout << "Įveskite failo pavadinimą: ";
             string failas;
             cin >> failas;
@@ -165,6 +161,12 @@ int main() {
                     s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
                     s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
                 }
+            
+            cout << "Studentų informacija: " << endl;
+            
+            sort(grupe.begin(), grupe.end(), [](auto &a, auto &b){
+                return a.vardas < b.vardas;
+            });
             
             if (pasirinkimas2 == 1){
                 cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
@@ -191,6 +193,9 @@ int main() {
                 }
             }
             
+        } else if (pasirinkimas1 == 5) {
+            cout << "Programa baigta." << endl;
+                        break;
         } else {
             cout << "Neteisingas pasirinkimas." << endl;
         }
@@ -384,9 +389,6 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
             cout << "Klaida skaitant egzamino pažymį eilutėje: " << eilute << endl;
             return;
         }
-        
-//        duomenys.galutinis_vidurkis = 0;
-//        duomenys.galutinis_mediana = 0;
         grupe.push_back(duomenys);
     }
     
