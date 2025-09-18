@@ -322,48 +322,61 @@ int generuoti_atsitiktini_bala(){
 
 void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe){
     ifstream in(failo_pavadinimas);
-    
-    if(!in.is_open()){
-        cout << "Nepavyko atidaryti failo." << failo_pavadinimas << endl;
+    if (!in.is_open()) {
+        cout << "Nepavyko atidaryti failo: " << failo_pavadinimas << endl;
         return;
     }
-    
+
     string eilute;
-    
-    if(!getline(in, eilute)){
-        cout << "Failas " << failo_pavadinimas << "tuščias arba netinkamas" << endl;
+    if (!getline(in, eilute)) {
+        cout << "Failas " << failo_pavadinimas << " tuščias arba netinkamas" << endl;
         return;
     }
-    
+
+    size_t eil_nr = 1;
+
     istringstream antraste(eilute);
     vector<string> stulpeliai;
     string stulp;
     while (antraste >> stulp) stulpeliai.push_back(stulp);
-    
     size_t nd_kiekis = stulpeliai.size() - 3;
-    
-    while (getline(in, eilute)){
+
+    while (getline(in, eilute)) {
+        ++eil_nr;
         if (eilute.empty()) continue;
+
         istringstream iss(eilute);
         studentas duomenys;
-        iss >> duomenys.vardas >> duomenys.pavarde;
-        
+
+        if (!(iss >> duomenys.vardas >> duomenys.pavarde)) {
+            cout << "Praleista eilutė " << eil_nr << "." << " (nerastas vardas/pavardė): " << eilute << endl;
+            continue;
+        }
+
+        bool klaida = false;
         duomenys.pazymiai.clear();
-        for (size_t i = 0; i < nd_kiekis; i++){
+
+        for (size_t i = 0; i < nd_kiekis; i++) {
             int nd;
             if (!(iss >> nd) || nd < 1 || nd > 10) {
-                cout << "Klaida skaitant ND pažymį eiluteje: " << eilute << endl;
+                cout << "Praleista eilutė " << eil_nr << "." << " (netinkamas ND pažymys): " << eilute << endl;
+                klaida = true;
+                break;
             }
             duomenys.pazymiai.push_back(nd);
         }
-        
-        if (!(iss >> duomenys.egzamino_pazymys) || duomenys.egzamino_pazymys < 1 || duomenys.egzamino_pazymys > 10) {
-            cout << "Klaida skaitant egzamino pažymį eiluteje: " << eilute << endl;
-            return;
+
+        if (klaida) continue;
+
+        int egz;
+        if (!(iss >> egz) || egz < 1 || egz > 10) {
+            cout << "Praleista eilutė " << eil_nr << "." << " (netinkamas egzamino pažymys): " << eilute << endl;
+            continue;
         }
+        duomenys.egzamino_pazymys = egz;
+
         grupe.push_back(duomenys);
     }
-    
-    cout << "Duomenys sėkmingai nuskaityti iš failo." << endl;
 
+    cout << "Duomenų nuskaitymas baigtas." << endl;
 }
