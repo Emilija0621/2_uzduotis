@@ -104,8 +104,6 @@ int main() {
 }
 
 
-
-
 void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
     vector<studentas> surusiuota = grupe;
     sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
@@ -113,11 +111,11 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
     });
 
     if (pasirinkimas == 1){
-        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(14) << left << "Galutinis (Vid.)" << endl;
+        cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Vid.)" << endl;
         cout << string(46, '-') << endl;
         for (auto past: surusiuota){
             cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(14) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
         }
         
     } else if (pasirinkimas == 2) {
@@ -125,7 +123,7 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
         cout << string(46, '-') << endl;
         for (auto past: surusiuota){
             cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(14) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_mediana << endl;
         }
         
     } else if (pasirinkimas == 3){
@@ -133,12 +131,10 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
         cout << string(55, '-') << endl;
         for (auto past: surusiuota){
             cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(10) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(15) << fixed << setprecision(2) << past.galutinis_mediana << endl;
         }
     }
 }
-
-
 
 
 int galutiniai_pazymiai(vector<studentas>& grupe) {
@@ -272,7 +268,6 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
                     cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10." << endl;
                 }
             }
-
         }
         return pirmas;
 }
@@ -329,7 +324,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 
     string eilute;
     if (!getline(in, eilute)) {
-        cout << "Failas " << failo_pavadinimas << " tuščias arba netinkamas" << endl;
+        cout << "Failas " << failo_pavadinimas << " tuščias arba netinkamas." << endl;
         return;
     }
 
@@ -359,7 +354,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
         for (size_t i = 0; i < nd_kiekis; i++) {
             int nd;
             if (!(iss >> nd) || nd < 1 || nd > 10) {
-                cout << "Praleista eilutė " << eil_nr << "." << " (netinkamas ND pažymys): " << eilute << endl;
+                cout << "Praleista eilutė " << eil_nr << "." << " (netinkamai įvesti studento duomenys): " << eilute << endl;
                 klaida = true;
                 break;
             }
@@ -370,7 +365,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 
         int egz;
         if (!(iss >> egz) || egz < 1 || egz > 10) {
-            cout << "Praleista eilutė " << eil_nr << "." << " (netinkamas egzamino pažymys): " << eilute << endl;
+            cout << "Praleista eilutė " << eil_nr << "." << " (netinkamai įvesti studento duomenys): " << eilute << endl;
             continue;
         }
         duomenys.egzamino_pazymys = egz;
