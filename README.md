@@ -26,6 +26,19 @@ Programa buvo testuota su:
 - 100 000 studentų failu
 - 1 000 000 studentų failu
 
+Naudojant "chrono" modelį, buvo nustatyta per kiek laiko įvyksta failo nuskaitymas bei rezultatų išvedimas (tinkrinta su vieno modelio kompiuteriu, tad rezultatai nėra išsamūs):
+
+| Studentų skaičius | Nuskaitymas (ms) | Skaičiavimas ir spausdinimas (ms)  |
+|:-----------------:|:----------------:|:----------------------------------:|
+| 10 000            | 137.16           | 1 568.67                           |
+| 100 000           | 941.01           | 4 569.07                           |
+| 1 000 000         | 4 871.99         | 33 839.26                          |
+
+Naudotos komandos:
+- std::chrono::high_resolution_clock::now()
+- start_read, end_read
+- std::chrono::duration<double, std::milli>
+
 Prie projekto įkelti failai:
 - kursiokai.txt
 - studentai10000.txt
