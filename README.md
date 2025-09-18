@@ -30,6 +30,5 @@ Prie projekto įkelti failai:
 - kursiokai.txt
 - studentai10000.txt
 - studentai100000.txt
-- studentai1000000.txt
 
 
