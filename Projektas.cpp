@@ -7,7 +7,6 @@
 #include<cctype>
 #include<fstream>
 #include<sstream>
-#include<chrono>
 
 
 using std::cout;
@@ -96,7 +95,7 @@ int main() {
             grupe.push_back(studentas_ivestis(true));
 
         } else if (pasirinkimas1 == 3) {
-            
+
             int pasirinkimas = galutiniai_pazymiai(grupe);
             spausdinti_studentus(grupe, pasirinkimas);
 
@@ -108,14 +107,14 @@ int main() {
 
         } else if (pasirinkimas1 == 5) {
             failo_generavimo_pasirinkimas();
-            
+
         } else if (pasirinkimas1 == 6) {
             padalinti_ir_isvesti_studentus(grupe);
-            
+
         } else if (pasirinkimas1 == 7) {
             cout << "Programa baigta." << endl;
             break;
-            
+
         } else {
             cout << "Neteisingas pasirinkimas." << endl;
         }
@@ -125,9 +124,81 @@ int main() {
 
 void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
     vector<studentas> surusiuota = grupe;
-    sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-        return a.vardas < b.vardas;
-    });
+
+    int rikiavimo_pasirinkimas;
+    while (true) {
+        cout << "Pagal ką norite rikiuoti studentų duomenis?" << endl;
+        cout << "1 - Pagal studentų vardus" << endl;
+        cout << "2 - Pagal studentų pavardes" << endl;
+        cout << "3 - Pagal galutinį pažymį" << endl;
+
+        string rikiavimas;
+        cin >> rikiavimas;
+
+        try {
+            rikiavimo_pasirinkimas = stoi(rikiavimas);
+            if (rikiavimo_pasirinkimas < 1 || rikiavimo_pasirinkimas > 3) {
+                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 3." << endl;
+                continue;
+            }
+            break;
+        } catch (const invalid_argument&) {
+            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 3." << endl;
+        }
+    }
+
+    if (rikiavimo_pasirinkimas == 1) {
+        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+            return a.vardas < b.vardas;
+        });
+    } else if (rikiavimo_pasirinkimas == 2) {
+        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+            return a.pavarde < b.pavarde;
+        });
+    } else if (rikiavimo_pasirinkimas == 3) {
+
+        if (pasirinkimas == 1) {
+            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+                return a.galutinis_vidurkis > b.galutinis_vidurkis;
+            });
+        } else if (pasirinkimas == 2) {
+            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+                return a.galutinis_mediana > b.galutinis_mediana;
+            });
+        } else if (pasirinkimas == 3) {
+
+            int kuris_rikiuoti = 0;
+            while (true) {
+                cout << "Pasirinkite pagal kurį galutinį pažymį rikiuoti:" << endl;
+                cout << "1 - Pagal vidurkį" << endl;
+                cout << "2 - Pagal medianą" << endl;
+
+                string ivestis;
+                cin >> ivestis;
+
+                try {
+                    kuris_rikiuoti = stoi(ivestis);
+                    if (kuris_rikiuoti < 1 || kuris_rikiuoti > 2) {
+                        cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
+                        continue;
+                    }
+                    break;
+                } catch (const invalid_argument&) {
+                    cout << "Įvesta netinkama reikšmė. Bandykite dar kartą." << endl;
+                }
+            }
+
+            if (kuris_rikiuoti == 1) {
+                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+                    return a.galutinis_vidurkis > b.galutinis_vidurkis;
+                });
+            } else {
+                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
+                    return a.galutinis_mediana > b.galutinis_mediana;
+                });
+            }
+        }
+    }
 
     if (pasirinkimas == 1){
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Vid.)" << endl;
@@ -136,7 +207,7 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
             cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
             cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
         }
-        
+
     } else if (pasirinkimas == 2) {
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
         cout << string(46, '-') << endl;
@@ -144,7 +215,7 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
             cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
             cout << setw(15) << fixed << setprecision(2) << past.galutinis_mediana << endl;
         }
-        
+
     } else if (pasirinkimas == 3){
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Vid.)" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
         cout << string(55, '-') << endl;
@@ -192,11 +263,11 @@ int galutiniai_pazymiai(vector<studentas>& grupe) {
 
 
 studentas studentas_ivestis(bool atsitiktiniai_balai){
-    
+
     string ivestis;
     studentas pirmas;
     cout << "Įveskite studento duomenis." << endl;
-    
+
     while (true){
         cout << "Vardas: "; cin >> pirmas.vardas;
         bool tikriname = true;
@@ -209,7 +280,7 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
         if(tikriname) break;
                 cout << "Vardas turi būti sudarytas tik iš raidžių." << endl;
     }
-    
+
     while (true){
         cout << "Pavardė: "; cin >> pirmas.pavarde;
         bool tikriname = true;
@@ -224,7 +295,7 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
     }
 
     if (atsitiktiniai_balai){
-        
+
         int kiek;
         while (true) {
             cout << "Kiek norite sugeneruoti pažymių? ";
@@ -242,16 +313,16 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
                 cout << "Įvesta netinkama reikšmė. Įveskite skaičių." << endl;
             }
         }
-        
+
             for (int i=0; i<kiek; i++){
                 pirmas.pazymiai.push_back(generuoti_atsitiktini_bala());
             }
-        
+
             pirmas.egzamino_pazymys = generuoti_atsitiktini_bala();
-        
+
         } else {
             cout << "įveskite studento pažymius (parašykite baigta, kai baigėte)"<< endl;
-            
+
             while (true){
                 cout << pirmas.pazymiai.size() + 1 << ". ";
                 cin >> ivestis;
@@ -269,7 +340,7 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
                     cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10 arba 'baigta'." << endl;
                 }
             }
-            
+
             while (true) {
                 cout << "Įveskite egzamino pažymį: ";
                 string ivestis;
@@ -306,7 +377,7 @@ double skaiciuoti_mediana(vector<int> pazymiai){
     if (pazymiai.empty()) return 0;
     sort(pazymiai.begin(), pazymiai.end());
     auto n = pazymiai.size();
-    
+
     if (n % 2 == 1) {
             return pazymiai[n / 2];
         } else {
@@ -317,7 +388,7 @@ double skaiciuoti_mediana(vector<int> pazymiai){
 
 double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana){
     double galutinis = 0;
-    
+
     if (naudoti_mediana){
         galutinis = skaiciuoti_mediana(pazymiai) * 0.4 + egzaminas * 0.6;
     } else {
@@ -340,7 +411,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
         cout << "Nepavyko atidaryti failo: " << failo_pavadinimas << endl;
         return;
     }
-    
+
     stringstream buferis;
     buferis << in.rdbuf();
     in.close();
@@ -432,7 +503,7 @@ void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int
 
 
 void failo_generavimo_pasirinkimas () {
-    
+
     int studentu_kiekio_pasirinkimas = 0;
 
     while (true) {
@@ -462,7 +533,7 @@ void failo_generavimo_pasirinkimas () {
 
     int studentu_kiekis = 0;
     string failo_pavadinimas;
-    
+
     if (studentu_kiekio_pasirinkimas == 1) {
         studentu_kiekis = 1000;
         failo_pavadinimas = "atsitiktiniai_studentai1000.txt";
@@ -481,16 +552,16 @@ void failo_generavimo_pasirinkimas () {
     } else {
         cout << "Neteisingas pasirinkimas." << endl;
     }
-    
-    
+
+
     int nd_generavimo_pasirinkimas = 0;
-    
+
     while (true) {
-        
+
         cout << "Ar norite pasirinkti ND pažymių kiekį? " << endl;
         cout << "1 - Įvesti savo norimą kiekį." << endl;
         cout << "2 - Generuoti atsitiktinai." << endl;
-        
+
         string nd_generavimas;
         cin >> nd_generavimas;
 
@@ -506,16 +577,16 @@ void failo_generavimo_pasirinkimas () {
             cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 2." << endl;
         }
     }
-    
+
     int nd_pazymiu_kiekis = 0;
     if (nd_generavimo_pasirinkimas == 1){
-        
+
         while (true) {
-            
+
             cout << "Kiek norite sugeneruoti ND pažymių (vienam studentui)?" << endl;
             string nd;
             cin >> nd;
-            
+
             try {
                 nd_pazymiu_kiekis = stoi(nd);
                 if (nd_pazymiu_kiekis < 1) {
@@ -528,12 +599,12 @@ void failo_generavimo_pasirinkimas () {
             }
         }
     } else if (nd_generavimo_pasirinkimas == 2){
-        
+
         nd_pazymiu_kiekis = generuoti_atsitiktini_nd_kieki();
     }
-    
+
     sugeneruoti_faila(failo_pavadinimas, studentu_kiekis, nd_pazymiu_kiekis);
-    
+
 }
 
 
@@ -546,7 +617,6 @@ int generuoti_atsitiktini_nd_kieki() {
 
 
 void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
-    
     if (grupe.empty()) {
         cout << "Studentų duomenų dar nėra." << endl;
         return;
@@ -558,56 +628,130 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
     }
 
     vector<studentas> vargsiukai;
-    vector<studentas> kietiakiai;
-    
-    
+    vector<studentas> kietiakai;
+
+
     int pagal_kuri_galutini;
     while (true) {
-        
         cout << "Pasirinkite pagal ką norite atskirti studentus į failus: " << endl;
         cout << "1 - galutinį pažymį pagal vidurkį" << endl;
         cout << "2 - galutinį pažymį pagal medianą" << endl;
-        
-        string galutinio_pasirinkimas;
-        cin >> galutinio_pasirinkimas;
+        string pasirinkimas;
+        cin >> pasirinkimas;
 
         try {
-            pagal_kuri_galutini = stoi(galutinio_pasirinkimas);
-
+            pagal_kuri_galutini = stoi(pasirinkimas);
             if (pagal_kuri_galutini < 1 || pagal_kuri_galutini > 2) {
-                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 2." << endl;
+                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
                 continue;
             }
             break;
-        } catch (const invalid_argument&) {
-            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 2." << endl;
+        } catch (...) {
+            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 2." << endl;
         }
     }
-    
+
     if (pagal_kuri_galutini == 1) {
         for (auto &s : grupe) {
             if (s.galutinis_vidurkis < 5.0)
                 vargsiukai.push_back(s);
             else
-                kietiakiai.push_back(s);
+                kietiakai.push_back(s);
         }
-        isvesti_padalintus_i_faila(vargsiukai, "vargsiukai_vidurkis.txt", pagal_kuri_galutini);
-        isvesti_padalintus_i_faila(kietiakiai, "kietiakiai_vidurkis.txt", pagal_kuri_galutini);
-            
     } else {
         for (auto &s : grupe) {
             if (s.galutinis_mediana < 5.0)
                 vargsiukai.push_back(s);
             else
-                kietiakiai.push_back(s);
+                kietiakai.push_back(s);
         }
-        isvesti_padalintus_i_faila(vargsiukai, "vargsiukai_mediana.txt", pagal_kuri_galutini);
-        isvesti_padalintus_i_faila(kietiakiai, "kietiakiai_mediana.txt", pagal_kuri_galutini);
     }
+
+    int pagal_kokia_rusiuoti;
+    while (true) {
+        cout << "Pasirinkite, pagal ką rūšiuoti failus: " << endl;
+        cout << "1 - pagal vardą" << endl;
+        cout << "2 - pagal pavardę" << endl;
+        if (pagal_kuri_galutini == 1)
+            cout << "3 - pagal galutinį vidurkį" << endl;
+        else
+            cout << "3 - pagal galutinę medianą" << endl;
+
+        string rusiuoti;
+        cin >> rusiuoti;
+
+        try {
+            pagal_kokia_rusiuoti = stoi(rusiuoti);
+            if (pagal_kokia_rusiuoti < 1 || pagal_kokia_rusiuoti > 3) {
+                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 3." << endl;
+                continue;
+            }
+            break;
+        } catch (...) {
+            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 3." << endl;
+        }
+    }
+
+ 
+    if (pagal_kokia_rusiuoti == 1) {
+        
+        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
+            return a.vardas < b.vardas;
+        });
+        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
+            return a.vardas < b.vardas;
+        });
+        
+    } else if (pagal_kokia_rusiuoti == 2) {
+        
+        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
+            return a.pavarde < b.pavarde;
+        });
+        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
+            return a.pavarde < b.pavarde;
+        });
+        
+    } else if (pagal_kokia_rusiuoti == 3) {
+        
+        if (pagal_kuri_galutini == 1) {
+            
+            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
+                return a.galutinis_vidurkis > b.galutinis_vidurkis;
+            });
+            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
+                return a.galutinis_vidurkis > b.galutinis_vidurkis;
+            });
+            
+        } else {
+            
+            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
+                return a.galutinis_mediana > b.galutinis_mediana;
+            });
+            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
+                return a.galutinis_mediana > b.galutinis_mediana;
+            });
+        }
+    }
+
+    string failas_vargsiukai;
+    string failas_kietiakiai;
+
+    if (pagal_kuri_galutini == 1) {
+        failas_vargsiukai = "vargsiukai_vidurkis.txt";
+        failas_kietiakiai = "kietiakai_vidurkis.txt";
+        
+    } else {
+        failas_vargsiukai = "vargsiukai_mediana.txt";
+        failas_kietiakiai = "kietiakai_mediana.txt";
+    }
+
+    isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+    isvesti_padalintus_i_faila(kietiakai, failas_kietiakiai, pagal_kuri_galutini);
 }
 
+
 void isvesti_padalintus_i_faila(const vector<studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
-    
+
     ostringstream buferis;
 
     if (pagal_kuri_galutini == 1) {
@@ -634,3 +778,4 @@ void isvesti_padalintus_i_faila(const vector<studentas>& grupe, const string& fa
     out.close();
     cout << "Išvestas failas: " << failo_pavadinimas << endl;
 }
+
