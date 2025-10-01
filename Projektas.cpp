@@ -28,6 +28,7 @@ using std::ifstream;
 using std::getline;
 using std::istringstream;
 using std::stringstream;
+using std::ofstream;
 
 
 struct studentas{
@@ -48,6 +49,8 @@ int generuoti_atsitiktini_bala();
 void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe);
 int galutiniai_pazymiai(vector<studentas>& grupe);
 void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas);
+void sugeneruoti_faila(const string& pavadinimas, int kiekio_pasirinkimas);
+void failo_generavimo_pasirinkimas();
 
 
 int main() {
@@ -61,14 +64,15 @@ int main() {
             cout << "2 - Įvesti vardą ir pavardę, bet pažymius generuoti atsitiktinai" << endl;
             cout << "3 - Spausdinti studentų rezultatus" << endl;
             cout << "4 - Nuskaityti studentų duomenis iš failo" << endl;
-            cout << "5 - Išeiti" << endl;
+            cout << "5 - Atsitiktinai generuoti studentų duomenis į failus" << endl;
+            cout << "6 - Išeiti" << endl;
 
             string ivestis;
             cin >> ivestis;
 
             try {
                 pasirinkimas1 = stoi(ivestis);
-                if (pasirinkimas1 < 1 || pasirinkimas1 > 5) {
+                if (pasirinkimas1 < 1 || pasirinkimas1 > 6) {
                     cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 5." << endl;
                     continue;
                 }
@@ -96,6 +100,9 @@ int main() {
             nuskaityti_duomenis_is_failo(failas, grupe);
 
         } else if (pasirinkimas1 == 5) {
+            failo_generavimo_pasirinkimas();
+            
+        } else if (pasirinkimas1 == 6) {
             cout << "Programa baigta." << endl;
             break;
             
@@ -381,3 +388,62 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 
     cout << "Duomenų nuskaitymas baigtas." << endl;
 }
+
+
+void sugeneruoti_faila(const string& failo_pavadinimas, int kiekio_pasirinkimas) {
+    
+    ofstream out(failo_pavadinimas);
+    
+        out << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egzaminas\n";
+        for(int i=1;i<=kiekio_pasirinkimas;i++){
+            out<<"Vardas"<<i<<" Pavarde"<<i<<" ";
+            
+            for(int j=0;j<5;j++) {
+                out<<generuoti_atsitiktini_bala()<<" ";
+            }
+            
+            out<<generuoti_atsitiktini_bala()<<"\n";
+        }
+        out.close();
+        cout<<"Sugeneruotas failas: "<<failo_pavadinimas<<" ("<<kiekio_pasirinkimas<<" studentų)\n";
+}
+
+
+
+void failo_generavimo_pasirinkimas () {
+    
+    int kiekio_pasirinkimas;
+    cout << "Pasirinkite failo dydį: " << endl;
+    cout << "1 - 1 000 studentų" << endl;
+    cout << "2 - 10 000 studentų" << endl;
+    cout << "3 - 100 000 studentų" << endl;
+    cout << "4 - 1 000 000 studentų" << endl;
+    cout << "5 - 10 000 000 studentų" << endl;
+    cout << "Įveskite pasirinkimą: " << endl;
+    cin >> kiekio_pasirinkimas;
+
+    int studentu_kiekis = 0;
+    string failo_pavadinimas;
+    
+    if (kiekio_pasirinkimas == 1) {
+        studentu_kiekis = 1000;
+        failo_pavadinimas = "atsitiktiniai_studentai1000.txt";
+    } else if (kiekio_pasirinkimas == 2) {
+        studentu_kiekis = 10000;
+        failo_pavadinimas = "atsitiktiniai_studentai10000.txt";
+    } else if (kiekio_pasirinkimas == 3) {
+        studentu_kiekis = 100000;
+        failo_pavadinimas = "atsitiktiniai_studentai100000.txt";
+    } else if (kiekio_pasirinkimas == 4) {
+        studentu_kiekis = 1000000;
+        failo_pavadinimas = "atsitiktiniai_studentai1000000.txt";
+    } else if (kiekio_pasirinkimas == 5) {
+        studentu_kiekis = 10000000;
+        failo_pavadinimas = "atsitiktiniai_studentai10000000.txt";
+    } else {
+        cout << "Neteisingas pasirinkimas." << endl;
+    }
+    
+    sugeneruoti_faila(failo_pavadinimas, studentu_kiekis);
+}
+
