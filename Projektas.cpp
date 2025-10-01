@@ -54,6 +54,7 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas);
 void sugeneruoti_faila(const string& pavadinimas, int kiekio_pasirinkimas);
 void failo_generavimo_pasirinkimas();
 int generuoti_atsitiktini_nd_kieki();
+void padalinti_ir_isvesti_studentus(vector<studentas>& grupe);
 
 
 int main() {
@@ -68,20 +69,21 @@ int main() {
             cout << "3 - Spausdinti studentų rezultatus" << endl;
             cout << "4 - Nuskaityti studentų duomenis iš failo" << endl;
             cout << "5 - Atsitiktinai generuoti studentų duomenis į failus" << endl;
-            cout << "6 - Išeiti" << endl;
+            cout << "6 - Padalinti studentus į dvi grupes (vargšiukai ir kietiakai) ir išvesti į atskirus failus" << endl;
+            cout << "7 - Išeiti" << endl;
 
             string ivestis;
             cin >> ivestis;
 
             try {
                 pasirinkimas1 = stoi(ivestis);
-                if (pasirinkimas1 < 1 || pasirinkimas1 > 6) {
-                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 6." << endl;
+                if (pasirinkimas1 < 1 || pasirinkimas1 > 7) {
+                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 7." << endl;
                     continue;
                 }
                 break;
             } catch (const invalid_argument&) {
-                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 6." << endl;
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 7." << endl;
             }
         }
 
@@ -106,6 +108,9 @@ int main() {
             failo_generavimo_pasirinkimas();
             
         } else if (pasirinkimas1 == 6) {
+            padalinti_ir_isvesti_studentus(grupe);
+            
+        } else if (pasirinkimas1 == 7) {
             cout << "Programa baigta." << endl;
             break;
             
@@ -395,20 +400,20 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 
 void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis) {
 
-    ostringstream buferis1;
+    ostringstream buffer;
 
-    buferis1 << "Vardas Pavarde ";
+    buffer << "Vardas Pavarde ";
     for (int k = 1; k <= nd_pazymiu_kiekis; k++) {
-        buferis1 << "ND" << k << " ";
+        buffer << "ND" << k << " ";
     }
-    buferis1 << "Egzaminas\n";
+    buffer << "Egzaminas\n";
 
     for (int i = 1; i <= studentu_kiekis; i++) {
-        buferis1 << "Vardas" << i << " Pavarde" << i << " ";
+        buffer << "Vardas" << i << " Pavarde" << i << " ";
         for (int j = 0; j < nd_pazymiu_kiekis; j++) {
-            buferis1 << generuoti_atsitiktini_bala() << " ";
+            buffer << generuoti_atsitiktini_bala() << " ";
         }
-        buferis1 << generuoti_atsitiktini_bala() << "\n";
+        buffer << generuoti_atsitiktini_bala() << "\n";
     }
 
     ofstream out(failo_pavadinimas);
@@ -416,7 +421,7 @@ void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int
         cout << "Nepavyko sukurti failo: " << failo_pavadinimas << endl;
         return;
     }
-    out << buferis1.str();
+    out << buffer.str();
     out.close();
 
     cout << "Sugeneruotas failas: " << failo_pavadinimas << " (" << studentu_kiekis << " studentų, po "<< nd_pazymiu_kiekis << " ND)" << endl;
@@ -536,3 +541,51 @@ int generuoti_atsitiktini_nd_kieki() {
     uniform_int_distribution<> dis(1, 20);
     return dis(gen);
 }
+
+
+void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
+    
+    if (grupe.empty()) {
+        cout << "Studentų duomenų dar nėra." << endl;
+        return;
+    }
+
+    for (auto &s : grupe) {
+        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
+        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
+    }
+
+    vector<studentas> vargsiukai;
+    vector<studentas> kietiakiai;
+
+    for (auto &s : grupe) {
+        if (s.galutinis_vidurkis < 5.0 && s.galutinis_mediana < 5) {
+            vargsiukai.push_back(s);
+        } else {
+            kietiakiai.push_back(s);
+        }
+    }
+
+    auto isvesti_i_faila = [](const vector<studentas>& grupe, const string& failo_pavadinimas) {
+        ostringstream buferis;
+
+        buferis << "Vardas Pavarde Galutinis_pažymus(vidurkis) Galutinis_pažymus(mediana)\n";
+        for (auto &s : grupe) {
+            buferis << s.vardas << " " << s.pavarde << " " << fixed << setprecision(2) << s.galutinis_vidurkis << " " << fixed << setprecision(2) << s.galutinis_mediana << "\n";
+        }
+
+        ofstream out(failo_pavadinimas);
+        if (!out.is_open()) {
+            cout << "Nepavyko sukurti failo: " << failo_pavadinimas << endl;
+            return;
+        }
+
+        out << buferis.str();
+        out.close();
+        cout << "Išvestas failas: " << failo_pavadinimas << endl;
+    };
+
+    isvesti_i_faila(vargsiukai, "vargsiukai.txt");
+    isvesti_i_faila(kietiakiai, "kietiakiai.txt");
+}
+
