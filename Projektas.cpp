@@ -8,6 +8,7 @@
 #include<fstream>
 #include<sstream>
 
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -26,6 +27,7 @@ using std::invalid_argument;
 using std::ifstream;
 using std::getline;
 using std::istringstream;
+using std::stringstream;
 
 
 struct studentas{
@@ -321,9 +323,13 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
         cout << "Nepavyko atidaryti failo: " << failo_pavadinimas << endl;
         return;
     }
+    
+    stringstream buferis;
+    buferis << in.rdbuf();
+    in.close();
 
     string eilute;
-    if (!getline(in, eilute)) {
+    if (!getline(buferis, eilute)) {
         cout << "Failas " << failo_pavadinimas << " tuščias arba netinkamas." << endl;
         return;
     }
@@ -336,7 +342,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
     while (antraste >> stulp) stulpeliai.push_back(stulp);
     size_t nd_kiekis = stulpeliai.size() - 3;
 
-    while (getline(in, eilute)) {
+    while (getline(buferis, eilute)) {
         ++eil_nr;
         if (eilute.empty()) continue;
 
