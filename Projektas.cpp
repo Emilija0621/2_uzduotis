@@ -51,6 +51,7 @@ int galutiniai_pazymiai(vector<studentas>& grupe);
 void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas);
 void sugeneruoti_faila(const string& pavadinimas, int kiekio_pasirinkimas);
 void failo_generavimo_pasirinkimas();
+int generuoti_atsitiktini_nd_kieki();
 
 
 int main() {
@@ -73,12 +74,12 @@ int main() {
             try {
                 pasirinkimas1 = stoi(ivestis);
                 if (pasirinkimas1 < 1 || pasirinkimas1 > 6) {
-                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 5." << endl;
+                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 6." << endl;
                     continue;
                 }
                 break;
             } catch (const invalid_argument&) {
-                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 5." << endl;
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 6." << endl;
             }
         }
 
@@ -390,60 +391,140 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 }
 
 
-void sugeneruoti_faila(const string& failo_pavadinimas, int kiekio_pasirinkimas) {
-    
+void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis) {
     ofstream out(failo_pavadinimas);
-    
-        out << "Vardas Pavarde ND1 ND2 ND3 ND4 ND5 Egzaminas\n";
-        for(int i=1;i<=kiekio_pasirinkimas;i++){
-            out<<"Vardas"<<i<<" Pavarde"<<i<<" ";
-            
-            for(int j=0;j<5;j++) {
-                out<<generuoti_atsitiktini_bala()<<" ";
-            }
-            
-            out<<generuoti_atsitiktini_bala()<<"\n";
+
+    out << "Vardas Pavarde ";
+    for (int k = 1; k <= nd_pazymiu_kiekis; k++) {
+        out << "ND" << k << " ";
+    }
+    out << "Egzaminas\n";
+
+    for (int i = 1; i <= studentu_kiekis; i++) {
+        out << "Vardas" << i << " Pavarde" << i << " ";
+
+        for (int j = 0; j < nd_pazymiu_kiekis; j++) {
+            out << generuoti_atsitiktini_bala() << " ";
         }
-        out.close();
-        cout<<"Sugeneruotas failas: "<<failo_pavadinimas<<" ("<<kiekio_pasirinkimas<<" studentų)\n";
+
+        out << generuoti_atsitiktini_bala() << "\n";
+    }
+
+    out.close();
+    cout << "Sugeneruotas failas: " << failo_pavadinimas << " (" << studentu_kiekis << " studentų, po " << nd_pazymiu_kiekis << " ND)" << endl;
 }
 
 
 
 void failo_generavimo_pasirinkimas () {
     
-    int kiekio_pasirinkimas;
-    cout << "Pasirinkite failo dydį: " << endl;
-    cout << "1 - 1 000 studentų" << endl;
-    cout << "2 - 10 000 studentų" << endl;
-    cout << "3 - 100 000 studentų" << endl;
-    cout << "4 - 1 000 000 studentų" << endl;
-    cout << "5 - 10 000 000 studentų" << endl;
-    cout << "Įveskite pasirinkimą: " << endl;
-    cin >> kiekio_pasirinkimas;
+    int studentu_kiekio_pasirinkimas = 0;
+
+    while (true) {
+        cout << "Pasirinkite failo dydį: " << endl;
+        cout << "1 - 1 000 studentų" << endl;
+        cout << "2 - 10 000 studentų" << endl;
+        cout << "3 - 100 000 studentų" << endl;
+        cout << "4 - 1 000 000 studentų" << endl;
+        cout << "5 - 10 000 000 studentų" << endl;
+        cout << "Įveskite pasirinkimą: " << endl;
+
+        string kiekio_pasirinkimas;
+        cin >> kiekio_pasirinkimas;
+
+        try {
+            studentu_kiekio_pasirinkimas = stoi(kiekio_pasirinkimas);
+
+            if (studentu_kiekio_pasirinkimas < 1 || studentu_kiekio_pasirinkimas > 5) {
+                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 5." << endl;
+                continue;
+            }
+            break;
+        } catch (const invalid_argument&) {
+            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 5." << endl;
+        }
+    }
 
     int studentu_kiekis = 0;
     string failo_pavadinimas;
     
-    if (kiekio_pasirinkimas == 1) {
+    if (studentu_kiekio_pasirinkimas == 1) {
         studentu_kiekis = 1000;
         failo_pavadinimas = "atsitiktiniai_studentai1000.txt";
-    } else if (kiekio_pasirinkimas == 2) {
+    } else if (studentu_kiekio_pasirinkimas == 2) {
         studentu_kiekis = 10000;
         failo_pavadinimas = "atsitiktiniai_studentai10000.txt";
-    } else if (kiekio_pasirinkimas == 3) {
+    } else if (studentu_kiekio_pasirinkimas == 3) {
         studentu_kiekis = 100000;
         failo_pavadinimas = "atsitiktiniai_studentai100000.txt";
-    } else if (kiekio_pasirinkimas == 4) {
+    } else if (studentu_kiekio_pasirinkimas == 4) {
         studentu_kiekis = 1000000;
         failo_pavadinimas = "atsitiktiniai_studentai1000000.txt";
-    } else if (kiekio_pasirinkimas == 5) {
+    } else if (studentu_kiekio_pasirinkimas == 5) {
         studentu_kiekis = 10000000;
         failo_pavadinimas = "atsitiktiniai_studentai10000000.txt";
     } else {
         cout << "Neteisingas pasirinkimas." << endl;
     }
     
-    sugeneruoti_faila(failo_pavadinimas, studentu_kiekis);
+    
+    int nd_generavimo_pasirinkimas = 0;
+    
+    while (true) {
+        
+        cout << "Ar norite pasirinkti ND pažymių kiekį? " << endl;
+        cout << "1 - Įvesti savo norimą kiekį." << endl;
+        cout << "2 - Generuoti atsitiktinai." << endl;
+        
+        string nd_generavimas;
+        cin >> nd_generavimas;
+
+        try {
+            nd_generavimo_pasirinkimas = stoi(nd_generavimas);
+
+            if (nd_generavimo_pasirinkimas < 1 || nd_generavimo_pasirinkimas > 2) {
+                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 2." << endl;
+                continue;
+            }
+            break;
+        } catch (const invalid_argument&) {
+            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 2." << endl;
+        }
+    }
+    
+    int nd_pazymiu_kiekis = 0;
+    if (nd_generavimo_pasirinkimas == 1){
+        
+        while (true) {
+            
+            cout << "Kiek norite sugeneruoti ND pažymių (vienam studentui)?" << endl;
+            string nd;
+            cin >> nd;
+            
+            try {
+                nd_pazymiu_kiekis = stoi(nd);
+                if (nd_pazymiu_kiekis < 1) {
+                    cout << "Turi būti teigiamas skaičius. Bandykite dar kartą." << endl;
+                    continue;
+                }
+                break;
+            } catch (const invalid_argument&) {
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių." << endl;
+            }
+        }
+    } else if (nd_generavimo_pasirinkimas == 2){
+        
+        nd_pazymiu_kiekis = generuoti_atsitiktini_nd_kieki();
+    }
+    
+    sugeneruoti_faila(failo_pavadinimas, studentu_kiekis, nd_pazymiu_kiekis);
+    
 }
 
+
+int generuoti_atsitiktini_nd_kieki() {
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 20);
+    return dis(gen);
+}
