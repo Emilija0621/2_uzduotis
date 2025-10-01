@@ -7,6 +7,7 @@
 #include<cctype>
 #include<fstream>
 #include<sstream>
+#include<chrono>
 
 
 using std::cout;
@@ -29,6 +30,7 @@ using std::getline;
 using std::istringstream;
 using std::stringstream;
 using std::ofstream;
+using std::ostringstream;
 
 
 struct studentas{
@@ -392,26 +394,32 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
 
 
 void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis) {
-    ofstream out(failo_pavadinimas);
 
-    out << "Vardas Pavarde ";
+    ostringstream buferis1;
+
+    buferis1 << "Vardas Pavarde ";
     for (int k = 1; k <= nd_pazymiu_kiekis; k++) {
-        out << "ND" << k << " ";
+        buferis1 << "ND" << k << " ";
     }
-    out << "Egzaminas\n";
+    buferis1 << "Egzaminas\n";
 
     for (int i = 1; i <= studentu_kiekis; i++) {
-        out << "Vardas" << i << " Pavarde" << i << " ";
-
+        buferis1 << "Vardas" << i << " Pavarde" << i << " ";
         for (int j = 0; j < nd_pazymiu_kiekis; j++) {
-            out << generuoti_atsitiktini_bala() << " ";
+            buferis1 << generuoti_atsitiktini_bala() << " ";
         }
-
-        out << generuoti_atsitiktini_bala() << "\n";
+        buferis1 << generuoti_atsitiktini_bala() << "\n";
     }
 
+    ofstream out(failo_pavadinimas);
+    if (!out.is_open()) {
+        cout << "Nepavyko sukurti failo: " << failo_pavadinimas << endl;
+        return;
+    }
+    out << buferis1.str();
     out.close();
-    cout << "Sugeneruotas failas: " << failo_pavadinimas << " (" << studentu_kiekis << " studentų, po " << nd_pazymiu_kiekis << " ND)" << endl;
+
+    cout << "Sugeneruotas failas: " << failo_pavadinimas << " (" << studentu_kiekis << " studentų, po "<< nd_pazymiu_kiekis << " ND)" << endl;
 }
 
 
