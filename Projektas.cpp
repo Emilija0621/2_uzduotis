@@ -55,6 +55,8 @@ void sugeneruoti_faila(const string& pavadinimas, int kiekio_pasirinkimas);
 void failo_generavimo_pasirinkimas();
 int generuoti_atsitiktini_nd_kieki();
 void padalinti_ir_isvesti_studentus(vector<studentas>& grupe);
+void isvesti_padalintus_i_faila(const vector<studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini);
+
 
 
 int main() {
@@ -557,35 +559,78 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
 
     vector<studentas> vargsiukai;
     vector<studentas> kietiakiai;
+    
+    
+    int pagal_kuri_galutini;
+    while (true) {
+        
+        cout << "Pasirinkite pagal ką norite atskirti studentus į failus: " << endl;
+        cout << "1 - galutinį pažymį pagal vidurkį" << endl;
+        cout << "2 - galutinį pažymį pagal medianą" << endl;
+        
+        string galutinio_pasirinkimas;
+        cin >> galutinio_pasirinkimas;
 
-    for (auto &s : grupe) {
-        if (s.galutinis_vidurkis < 5.0 && s.galutinis_mediana < 5) {
-            vargsiukai.push_back(s);
-        } else {
-            kietiakiai.push_back(s);
+        try {
+            pagal_kuri_galutini = stoi(galutinio_pasirinkimas);
+
+            if (pagal_kuri_galutini < 1 || pagal_kuri_galutini > 2) {
+                cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 2." << endl;
+                continue;
+            }
+            break;
+        } catch (const invalid_argument&) {
+            cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 2." << endl;
+        }
+    }
+    
+    if (pagal_kuri_galutini == 1) {
+        for (auto &s : grupe) {
+            if (s.galutinis_vidurkis < 5.0)
+                vargsiukai.push_back(s);
+            else
+                kietiakiai.push_back(s);
+        }
+        isvesti_padalintus_i_faila(vargsiukai, "vargsiukai_vidurkis.txt", pagal_kuri_galutini);
+        isvesti_padalintus_i_faila(kietiakiai, "kietiakiai_vidurkis.txt", pagal_kuri_galutini);
+            
+    } else {
+        for (auto &s : grupe) {
+            if (s.galutinis_mediana < 5.0)
+                vargsiukai.push_back(s);
+            else
+                kietiakiai.push_back(s);
+        }
+        isvesti_padalintus_i_faila(vargsiukai, "vargsiukai_mediana.txt", pagal_kuri_galutini);
+        isvesti_padalintus_i_faila(kietiakiai, "kietiakiai_mediana.txt", pagal_kuri_galutini);
+    }
+}
+
+void isvesti_padalintus_i_faila(const vector<studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
+    
+    ostringstream buferis;
+
+    if (pagal_kuri_galutini == 1) {
+        buferis << "Vardas Pavarde Galutinis_pažymys(vidurkis)\n";
+        for (auto &s : grupe) {
+            buferis << s.vardas << " " << s.pavarde << " "
+                    << fixed << setprecision(2) << s.galutinis_vidurkis << "\n";
+        }
+    } else {
+        buferis << "Vardas Pavarde Galutinis_pažymys(mediana)\n";
+        for (auto &s : grupe) {
+            buferis << s.vardas << " " << s.pavarde << " "
+                    << fixed << setprecision(2) << s.galutinis_mediana << "\n";
         }
     }
 
-    auto isvesti_i_faila = [](const vector<studentas>& grupe, const string& failo_pavadinimas) {
-        ostringstream buferis;
+    ofstream out(failo_pavadinimas);
+    if (!out.is_open()) {
+        cout << "Nepavyko sukurti failo: " << failo_pavadinimas << endl;
+        return;
+    }
 
-        buferis << "Vardas Pavarde Galutinis_pažymus(vidurkis) Galutinis_pažymus(mediana)\n";
-        for (auto &s : grupe) {
-            buferis << s.vardas << " " << s.pavarde << " " << fixed << setprecision(2) << s.galutinis_vidurkis << " " << fixed << setprecision(2) << s.galutinis_mediana << "\n";
-        }
-
-        ofstream out(failo_pavadinimas);
-        if (!out.is_open()) {
-            cout << "Nepavyko sukurti failo: " << failo_pavadinimas << endl;
-            return;
-        }
-
-        out << buferis.str();
-        out.close();
-        cout << "Išvestas failas: " << failo_pavadinimas << endl;
-    };
-
-    isvesti_i_faila(vargsiukai, "vargsiukai.txt");
-    isvesti_i_faila(kietiakiai, "kietiakiai.txt");
+    out << buferis.str();
+    out.close();
+    cout << "Išvestas failas: " << failo_pavadinimas << endl;
 }
-
