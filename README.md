@@ -10,7 +10,9 @@ Vartotojui leidžia pasirinkti:
 2. Įvesti studentų vardus, pavardes su savo turimais duomenimis ir namų darbų, egzamino pažymius generuoti atsitiktinai.
 3. Spausdinti studentų rezultatus (pasirinkus ar su vidurkiu ar su mediana ar su abiem yra norima skaičiuoti galutinį pažymį).
 4. Nuskaityti studentų duomenis iš failo (pavadinimas.txt).
-5. Išeiti iš programos.
+5. Atsitiktinai generuoti studentų duomenis į failus
+6. Padalinti studentus į dvi grupes (vargšiukai ir kietiakai) ir išvesti į atskirus failus
+7. Išeiti iš programos.
 
 Failas (pavadinimas.txt), iš kurio norima nuskaityti duomenis turi atrodyti taip:
 
@@ -21,27 +23,37 @@ Failas (pavadinimas.txt), iš kurio norima nuskaityti duomenis turi atrodyti tai
 | Vardas3  | Pavardė3  |  6  |  5  |  7  | ... |  8  |     9     |
 |   ...    |   ...     | ... | ... | ... | ... | ... |    ...    |
 
-Programa buvo testuota su:
-- 10 000 studentų failu
-- 100 000 studentų failu
-- 1 000 000 studentų failu
 
-Naudojant "chrono" modelį, buvo nustatyta per kiek laiko įvyksta failo nuskaitymas bei rezultatų išvedimas (tinkrinta su vieno modelio kompiuteriu, tad rezultatai nėra išsamūs):
+## Studentų duomenų apdorojimo našumo analizė
 
-| Studentų skaičius | Nuskaitymas (ms) | Skaičiavimas ir spausdinimas (ms)  |
-|:-----------------:|:----------------:|:----------------------------------:|
-| 10 000            | 137.16           | 1 568.67                           |
-| 100 000           | 941.01           | 4 569.07                           |
-| 1 000 000         | 4 871.99         | 33 839.26                          |
+Buvo atlikti matavimai su skirtingais sugeneruotų studentų skaičiais:
+- 1 000
+- 10 000
+- 100 000
+- 1 000 000
+- 10 000 000
 
-Naudotos komandos:
-- std::chrono::high_resolution_clock::now()
-- start_read, end_read
-- std::chrono::duration<double, std::milli>
+Analizė buvo daroma su failais, kuriuose studentų ND kiekis yra 10. Rezultatuose paimamas 5 laiko matavimų vidurkis.
 
-Prie projekto įkelti failai:
-- kursiokai.txt
-- studentai10000.txt
-- studentai100000.txt
+Matuota:
+- Failo kūrimo laikas
+- Failo nuskaitymo laikas
+- Padalinimo į dvi grupes laikas
+- Rikiavimo laikas (pagal galutinį pažymį)
+- Išvedimo į failus laikas
+
+## Rezultatai
+
+| Studentų skaičius | Failo kūrimas (s) | Nuskaitymas (s) | Padalinimas (s) | Rikiavimas (s) | Išvedimas į failus (s) |
+|:-----------------:|:-----------------:|:---------------:|:---------------:|:--------------:|:----------------------:|
+| 1 000             | 0.0099            | 0.0051          | 0.000266        | 0.000315       | 0.00129                |
+| 10 000            | 0.0253            | 0.0207          | 0.001637        | 0.001050       | 0.002542               |
+| 100 000           | 0.1269            | 0.1677          | 0.009864        | 0.007347       | 0.010623               |
+| 1 000 000         | 1.2427            | 1.6367          | 0.061116        | 0.045461       | 0.104203               |
+| 10 000 000        | 12.5017           | 17.0524         | 0.52631         | 0.463302       | 1.074912               |
+
+
+
+
 
 
