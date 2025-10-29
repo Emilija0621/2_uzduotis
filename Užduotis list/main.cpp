@@ -4,18 +4,19 @@
 #include "failu_skaitymas.h"
 #include "failu_generavimas.h"
 #include<iostream>
-#include<vector>
 #include<string>
+#include<list>
 #include "laikas.h"
 
 
 using std::cout;
+using std::list;
 using std::cin;
 using std::endl;
 using std::invalid_argument;
 
 int main() {
-    vector<studentas> grupe;
+    list<studentas> grupe;
     int pasirinkimas1;
 
     while (true) {
@@ -46,11 +47,9 @@ int main() {
 
         if (pasirinkimas1 == 1) {
             grupe.push_back(studentas_ivestis(false));
-            cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 2) {
             grupe.push_back(studentas_ivestis(true));
-            cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 3) {
 
