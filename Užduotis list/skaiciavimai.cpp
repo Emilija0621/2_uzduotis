@@ -3,15 +3,18 @@
 #include<algorithm>
 #include<iostream>
 #include<string>
+#include<list>
 
 using std::string;
+using std::list;
 using std::cin;
 using std::cout;
 using std::endl;
 using std::invalid_argument;
+using std::advance;
 
 
-double skaiciuoti_vidurki(const vector<int>& pazymiai){
+double skaiciuoti_vidurki(const list<int>& pazymiai){
     if (pazymiai.empty()) return 0;
     double suma = 0;
     for (auto paz: pazymiai){
@@ -21,20 +24,30 @@ double skaiciuoti_vidurki(const vector<int>& pazymiai){
 }
 
 
-double skaiciuoti_mediana(vector<int> pazymiai){
+double skaiciuoti_mediana(list<int> pazymiai){
     if (pazymiai.empty()) return 0;
-    sort(pazymiai.begin(), pazymiai.end());
+    
+    pazymiai.sort();
+    
     auto n = pazymiai.size();
+    auto m = pazymiai.begin();
+    
 
     if (n % 2 == 1) {
-            return pazymiai[n / 2];
-        } else {
-            return (pazymiai[n / 2 - 1] + pazymiai[n / 2]) / 2.0;
+        advance(m, n/2);
+        return *m;
+    } else {
+        auto m1 = pazymiai.begin();
+        advance(m1, n/2 - 1);
+        auto m2 = m1;
+        ++ m2;
+        
+        return (*m1 + *m2) / 2.0;
         }
 }
 
 
-double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana){
+double skaiciuoti_galutinis_pazymys(const list<int>& pazymiai, int egzaminas, bool naudoti_mediana){
     double galutinis = 0;
 
     if (naudoti_mediana){
@@ -45,7 +58,7 @@ double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, 
     return galutinis;
 }
 
-int galutiniai_pazymiai(vector<studentas>& grupe) {
+int galutiniai_pazymiai(list<studentas>& grupe) {
     if (grupe.empty()) {
         cout << "Studentų duomenų dar nėra." << endl;
         return 0;
