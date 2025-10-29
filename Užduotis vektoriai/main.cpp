@@ -46,9 +46,13 @@ int main() {
 
         if (pasirinkimas1 == 1) {
             grupe.push_back(studentas_ivestis(false));
+            
+            cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 2) {
             grupe.push_back(studentas_ivestis(true));
+            
+            cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 3) {
 
