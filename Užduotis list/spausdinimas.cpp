@@ -1,11 +1,11 @@
 #include "spausdinimas.h"
 #include<iostream>
-#include<vector>
+#include<list>
 #include<string>
 #include<iomanip>
 #include<algorithm>
 
-using std::vector;
+using std::list;
 using std::string;
 using std::cout;
 using std::cin;
@@ -18,8 +18,8 @@ using std::fixed;
 using std::setprecision;
 
 
-void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
-    vector<studentas> surusiuota = grupe;
+void spausdinti_studentus(const list<studentas>& grupe, int pasirinkimas) {
+    list<studentas> surusiuota = grupe;
 
     int rikiavimo_pasirinkimas;
     while (true) {
@@ -44,23 +44,15 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
     }
 
     if (rikiavimo_pasirinkimas == 1) {
-        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.vardas < b.vardas;
-        });
+        surusiuota.sort([](auto &a, auto &b){return a.vardas < b.vardas;});
     } else if (rikiavimo_pasirinkimas == 2) {
-        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.pavarde < b.pavarde;
-        });
+        surusiuota.sort([](auto &a, auto &b){return a.pavarde < b.pavarde;});
     } else if (rikiavimo_pasirinkimas == 3) {
 
         if (pasirinkimas == 1) {
-            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis > b.galutinis_vidurkis;
-            });
+            surusiuota.sort([](auto &a, auto &b){return a.galutinis_vidurkis > b.galutinis_vidurkis;});
         } else if (pasirinkimas == 2) {
-            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana > b.galutinis_mediana;
-            });
+            surusiuota.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
         } else if (pasirinkimas == 3) {
 
             int kuris_rikiuoti = 0;
@@ -85,13 +77,9 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
             }
 
             if (kuris_rikiuoti == 1) {
-                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_vidurkis > b.galutinis_vidurkis;
-                });
+                surusiuota.sort([](auto &a, auto &b){return a.galutinis_vidurkis > b.galutinis_vidurkis;});
             } else {
-                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_mediana > b.galutinis_mediana;
-                });
+                surusiuota.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
             }
         }
     }
