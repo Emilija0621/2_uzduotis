@@ -4,14 +4,17 @@
 #include<fstream>
 #include<sstream>
 #include<iomanip>
+#include<list>
 
 using std::ifstream;
 using std::cout;
 using std::endl;
 using std::stringstream;
 using std::istringstream;
+using std::list;
 
-void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe){
+
+void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, list<studentas>& grupe){
     ifstream in(failo_pavadinimas);
     if (!in.is_open()) {
         cout << "Nepavyko atidaryti failo: " << failo_pavadinimas << endl;
@@ -31,9 +34,10 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
     size_t eil_nr = 1;
 
     istringstream antraste(eilute);
-    vector<string> stulpeliai;
+    list<string> stulpeliai;
     string stulp;
     while (antraste >> stulp) stulpeliai.push_back(stulp);
+    
     size_t nd_kiekis = stulpeliai.size() - 3;
 
     while (getline(buferis, eilute)) {
@@ -74,5 +78,5 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
     }
 
     cout << "Duomenų nuskaitymas baigtas." << endl;
-};
+}
 
