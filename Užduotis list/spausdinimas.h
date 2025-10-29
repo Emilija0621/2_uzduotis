@@ -1,6 +1,6 @@
-#include<vector>
+#include<list>
 #include "studentas.h"
 
-using std::vector;
+using std::list;
 
-void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas);
+void spausdinti_studentus(const list<studentas>& grupe, int pasirinkimas);
