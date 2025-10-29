@@ -159,7 +159,7 @@ void failo_generavimo_pasirinkimas() {
 
 }
 
-void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
+void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
     if (grupe.empty()) {
         cout << "Studentų duomenų dar nėra." << endl;
         return;
@@ -170,8 +170,8 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
         s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
     }
 
-    vector<studentas> vargsiukai;
-    vector<studentas> kietiakai;
+    list<studentas> vargsiukai;
+    list<studentas> kietiakai;
 
 
     int pagal_kuri_galutini;
@@ -246,41 +246,25 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
  
     if (pagal_kokia_rusiuoti == 1) {
         
-        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-            return a.vardas < b.vardas;
-        });
-        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-            return a.vardas < b.vardas;
-        });
+        vargsiukai.sort([](auto &a, auto &b){return a.vardas < b.vardas;});
+        kietiakai.sort([](auto &a, auto &b){return a.vardas < b.vardas;});
         
     } else if (pagal_kokia_rusiuoti == 2) {
         
-        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-            return a.pavarde < b.pavarde;
-        });
-        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-            return a.pavarde < b.pavarde;
-        });
+        vargsiukai.sort([](auto &a, auto &b){return a.pavarde < b.pavarde;});
+        kietiakai.sort([](auto &a, auto &b){return a.pavarde < b.pavarde;});
         
     } else if (pagal_kokia_rusiuoti == 3) {
         
         if (pagal_kuri_galutini == 1) {
             
-            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis > b.galutinis_vidurkis;
-            });
-            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis > b.galutinis_vidurkis;
-            });
+            vargsiukai.sort([](auto &a, auto &b){return a.galutinis_vidurkis > b.galutinis_vidurkis;});
+            kietiakai.sort([](auto &a, auto &b){return a.galutinis_vidurkis > b.galutinis_vidurkis;});
             
         } else {
             
-            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana > b.galutinis_mediana;
-            });
-            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana > b.galutinis_mediana;
-            });
+            vargsiukai.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
+            kietiakai.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
         }
     }
     
@@ -311,7 +295,7 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
 }
 
 
-void isvesti_padalintus_i_faila(const vector<studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
+void isvesti_padalintus_i_faila(const list<studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
 
     ostringstream buferis;
 
