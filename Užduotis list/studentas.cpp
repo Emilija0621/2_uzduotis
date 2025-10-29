@@ -3,7 +3,6 @@
 #include<iostream>
 #include<cctype>
 
-
 using std::cout;
 using std::cin;
 using std::endl;
@@ -109,5 +108,6 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
             }
         }
         return pirmas;
+    
 }
 
