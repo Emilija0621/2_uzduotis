@@ -1,9 +1,9 @@
 #include "studentas.h"
-#include<vector>
+#include<list>
 
-using std::vector;
+using std::list;
 
-int galutiniai_pazymiai(vector<studentas>& grupe);
-double skaiciuoti_mediana(vector<int> pazymiai);
-double skaiciuoti_vidurki(const vector<int>& pazymiai);
-double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, bool naudoti_mediana = false);
+int galutiniai_pazymiai(list<studentas>& grupe);
+double skaiciuoti_mediana(list<int> pazymiai);
+double skaiciuoti_vidurki(const list<int>& pazymiai);
+double skaiciuoti_galutinis_pazymys(const list<int>& pazymiai, int egzaminas, bool naudoti_mediana = false);
