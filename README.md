@@ -48,7 +48,11 @@ Atveju, kai vartotojas nori gauti skaičiavimus abejais būdais bei rikiavimą p
 
 <img width="424" height="53" alt="image" src="https://github.com/user-attachments/assets/2b16f3db-1c36-4c25-8168-49115ac8a555" /><br>
 
+Pasirinkus studentus padalinti pagal galutinį pažymį (skaičiuojamas su vidurkiu):<br>
+
 <img width="431" height="69" alt="image" src="https://github.com/user-attachments/assets/c2b9d3b0-c727-492e-b3d2-b62153423ba6" /><br>
+
+Pasirinkus studentus padalinti pagal galutinį pažymį (skaičiuojamas su mediana):<br>
 
 <img width="431" height="69" alt="image" src="https://github.com/user-attachments/assets/1969c469-ff51-4f4b-9bb3-bc87086179a9" /><br>
 
