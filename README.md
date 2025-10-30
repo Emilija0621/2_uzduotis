@@ -44,7 +44,7 @@ Atveju, kai vartotojas nori gauti skaičiavimus abejais būdais bei rikiavimą p
 
 <img width="291" height="56" alt="image" src="https://github.com/user-attachments/assets/aad2320a-2e11-4619-9f06-d399bdf14c7d" /><br>
 
--  Studentai į grupes padalinami pagal jų galutinį pažymį (galutinis balas < 5.0 yra “vargšiukai”, >= 5.0 galėtume yra “kietiakiai”). Išvedant studentus į failus leidžiama pasirinkti, pagal kurį galutinį pažymį norima juos padalinti bei pagal ką išrikiuoti:<br>
+-  Studentai į grupes padalinami pagal jų galutinį pažymį (galutinis balas < 5.0 yra “vargšiukai”, >= 5.0 yra “kietiakiai”). Išvedant studentus į failus leidžiama pasirinkti, pagal kurį galutinį pažymį norima juos padalinti bei pagal ką išrikiuoti:<br>
 
 <img width="424" height="53" alt="image" src="https://github.com/user-attachments/assets/2b16f3db-1c36-4c25-8168-49115ac8a555" /><br>
 
