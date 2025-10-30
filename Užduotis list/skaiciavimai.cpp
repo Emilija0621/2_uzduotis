@@ -66,7 +66,7 @@ int galutiniai_pazymiai(list<studentas>& grupe) {
 
     int pasirinkimas;
     while (true) {
-        cout << "Pasirinkite kaip norėsite skaičiuoti galutinį įvertinimą" << endl;
+        cout << "Pasirinkite, kaip norėsite skaičiuoti galutinį įvertinimą:" << endl;
         cout << "1 - su vidurkiu\n2 - su mediana\n3 - noriu gauti abejais būdais suskaičiuotus įvertinimus" << endl;
 
         string ivestis;
