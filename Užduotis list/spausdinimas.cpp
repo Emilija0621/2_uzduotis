@@ -23,7 +23,7 @@ void spausdinti_studentus(const list<studentas>& grupe, int pasirinkimas) {
 
     int rikiavimo_pasirinkimas;
     while (true) {
-        cout << "Pagal ką norite rikiuoti studentų duomenis?" << endl;
+        cout << "Pasirinkite pagal ką norėsite rikiuoti studentus:" << endl;
         cout << "1 - Pagal studentų vardus" << endl;
         cout << "2 - Pagal studentų pavardes" << endl;
         cout << "3 - Pagal galutinį pažymį" << endl;
