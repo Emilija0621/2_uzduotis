@@ -159,44 +159,9 @@ void failo_generavimo_pasirinkimas() {
 
 }
 
-void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
-    if (grupe.empty()) {
-        cout << "Studentų duomenų dar nėra." << endl;
-        return;
-    }
 
-    for (auto &s : grupe) {
-        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
-        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
-    }
-
-    list<studentas> vargsiukai;
-    list<studentas> kietiakai;
-
-
-    int pagal_kuri_galutini;
-    while (true) {
-        cout << "Pasirinkite pagal ką norite atskirti studentus į failus: " << endl;
-        cout << "1 - galutinį pažymį pagal vidurkį" << endl;
-        cout << "2 - galutinį pažymį pagal medianą" << endl;
-        string pasirinkimas;
-        cin >> pasirinkimas;
-
-        try {
-            pagal_kuri_galutini = stoi(pasirinkimas);
-            if (pagal_kuri_galutini < 1 || pagal_kuri_galutini > 2) {
-                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
-                continue;
-            }
-            break;
-        } catch (...) {
-            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 2." << endl;
-        }
-    }
+void padalinimo_1_strategija(list<studentas> &grupe, list<studentas> &vargsiukai, list<studentas> &kietiakai, int pagal_kuri_galutini){
     
-    laikas t1;
-    t1.reset();
-
     if (pagal_kuri_galutini == 1) {
         for (auto &s : grupe) {
             if (s.galutinis_vidurkis < 5.0)
@@ -212,10 +177,66 @@ void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
                 kietiakai.push_back(s);
         }
     }
-    
-    cout << "Studentus padalino į grupes per " << t1.elapsed() << " sekundžių" << endl;
+}
 
-    int pagal_kokia_rusiuoti;
+
+void padalinimo_2_strategija(list<studentas> &grupe, list<studentas> &vargsiukai, int pagal_kuri_galutini){
+    
+    if (pagal_kuri_galutini == 1){
+        grupe.sort([](const studentas &a, const studentas &b){return a.galutinis_vidurkis > b.galutinis_vidurkis;});
+
+        while (!grupe.empty()) {
+            studentas s = grupe.back();
+            if (s.galutinis_vidurkis < 5.0) {
+                vargsiukai.push_back(s);
+                grupe.pop_back();
+            } else {
+                break;
+            }
+        }
+
+    } else if (pagal_kuri_galutini == 2){
+        grupe.sort([](const studentas &a, const studentas &b){return a.galutinis_mediana > b.galutinis_mediana;});
+
+        while (!grupe.empty()) {
+            studentas s = grupe.back();
+            if (s.galutinis_mediana < 5.0) {
+                vargsiukai.push_back(s);
+                grupe.pop_back();
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+
+int pasirinkti_strategija() {
+    int strategija = 0;
+    while (true) {
+        cout << "Pasirinkite studentų padalijimo strategiją: " << endl;
+        cout << "1 - Paprasta (pagal 5 ribą)" << endl;
+        cout << "2 - Efektyvesnė (rūšiavimas ir pop_back)" << endl;
+
+        string pasirinkimas;
+        cin >> pasirinkimas;
+
+        try {
+            strategija = stoi(pasirinkimas);
+            if (strategija < 1 || strategija > 2) {
+                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
+                continue;
+            }
+            break;
+        } catch (...) {
+            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 2." << endl;
+        }
+    }
+    return strategija;
+}
+
+void pagal_ka_rusiuoti(list<studentas> &vargsiukai, list<studentas> &kietiakai, int pagal_kuri_galutini){
+    int pagal_kokia_rusiuoti = 0;
     while (true) {
         cout << "Pasirinkite, pagal ką rūšiuoti failus: " << endl;
         cout << "1 - pagal vardą" << endl;
@@ -267,31 +288,88 @@ void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
             kietiakai.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
         }
     }
-    
-    cout << "Studentus išrikiavo per " << t2.elapsed() << " sekundžių" << endl;
+}
 
-    string failas_vargsiukai;
-    string failas_kietiakiai;
-
-    if (pagal_kuri_galutini == 1) {
-        failas_vargsiukai = "vargsiukai_vidurkis.txt";
-        failas_kietiakiai = "kietiakai_vidurkis.txt";
-        
-    } else {
-        failas_vargsiukai = "vargsiukai_mediana.txt";
-        failas_kietiakiai = "kietiakai_mediana.txt";
+void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
+    if (grupe.empty()) {
+        cout << "Studentų duomenų dar nėra." << endl;
+        return;
     }
 
-    laikas t3;
-    t3.reset();
-    isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
-    cout << "Vargšiukų failą sukūrė per " << t3.elapsed() << " sekundžių" << endl;
-
-    laikas t4;
-    t4.reset();
-    isvesti_padalintus_i_faila(kietiakai, failas_kietiakiai, pagal_kuri_galutini);
-    cout << "Kietiakų failą sukūrė per " << t4.elapsed() << " sekundžių" << endl;
+    for (auto &s : grupe) {
+        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
+        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
+    }
     
+    int strategija = pasirinkti_strategija();
+    
+    int pagal_kuri_galutini;
+    while (true) {
+        cout << "Pasirinkite pagal ką norite atskirti studentus į failus: " << endl;
+        cout << "1 - galutinį pažymį pagal vidurkį" << endl;
+        cout << "2 - galutinį pažymį pagal medianą" << endl;
+        string pasirinkimas;
+        cin >> pasirinkimas;
+
+        try {
+            pagal_kuri_galutini = stoi(pasirinkimas);
+            if (pagal_kuri_galutini < 1 || pagal_kuri_galutini > 2) {
+                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
+                continue;
+            }
+            break;
+        } catch (...) {
+            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 2." << endl;
+        }
+    }
+    
+    if (strategija == 1) {
+        
+        list<studentas> kietiakai;
+        list<studentas> vargsiukai;
+        padalinimo_1_strategija(grupe, vargsiukai, kietiakai, pagal_kuri_galutini);
+        
+        pagal_ka_rusiuoti(vargsiukai, kietiakai, pagal_kuri_galutini);
+        
+        string failas_vargsiukai;
+        string failas_kietiakai;
+
+        if (pagal_kuri_galutini == 1) {
+            failas_vargsiukai = "vargsiukai_vidurkis.txt";
+            failas_kietiakai = "kietiakai_vidurkis.txt";
+            
+        } else if (pagal_kuri_galutini == 2) {
+            failas_vargsiukai = "vargsiukai_mediana.txt";
+            failas_kietiakai = "kietiakai_mediana.txt";
+        }
+        
+        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        isvesti_padalintus_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
+        
+    } else if (strategija == 2) {
+        
+        list<studentas> vargsiukai;
+        list<studentas> grupe1 = grupe;
+        padalinimo_2_strategija(grupe1, vargsiukai, pagal_kuri_galutini);
+        
+        pagal_ka_rusiuoti(vargsiukai, grupe1, pagal_kuri_galutini);
+        
+        string failas_vargsiukai;
+        string failas_kietiakai;
+
+        if (pagal_kuri_galutini == 1) {
+            failas_vargsiukai = "vargsiukai_vidurkis.txt";
+            failas_kietiakai = "kietiakai_vidurkis.txt";
+            
+        } else if (pagal_kuri_galutini == 2) {
+            failas_vargsiukai = "vargsiukai_mediana.txt";
+            failas_kietiakai = "kietiakai_mediana.txt";
+        }
+        
+        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        isvesti_padalintus_i_faila(grupe1, failas_kietiakai, pagal_kuri_galutini);
+
+    }
 }
 
 
