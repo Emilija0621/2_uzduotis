@@ -261,8 +261,8 @@ void pagal_ka_rusiuoti(list<studentas> &vargsiukai, list<studentas> &kietiakai, 
         }
     }
     
-    laikas t2;
-    t2.reset();
+    laikas t;
+    t.reset();
 
  
     if (pagal_kokia_rusiuoti == 1) {
@@ -288,6 +288,7 @@ void pagal_ka_rusiuoti(list<studentas> &vargsiukai, list<studentas> &kietiakai, 
             kietiakai.sort([](auto &a, auto &b){return a.galutinis_mediana > b.galutinis_mediana;});
         }
     }
+    cout << "Rūšiavimas užtruko: " << t.elapsed() << " sekundžių" << endl;
 }
 
 void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
@@ -327,7 +328,11 @@ void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
         
         list<studentas> kietiakai;
         list<studentas> vargsiukai;
+        
+        laikas t;
+        t.reset();
         padalinimo_1_strategija(grupe, vargsiukai, kietiakai, pagal_kuri_galutini);
+        cout << "Studentai padalinti į grupes " << t.elapsed() << " sekundžių" << endl;
         
         pagal_ka_rusiuoti(vargsiukai, kietiakai, pagal_kuri_galutini);
         
@@ -343,14 +348,22 @@ void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
             failas_kietiakai = "kietiakai_mediana.txt";
         }
         
+        t.reset();
         isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        cout << "Vargsiukų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
+        t.reset();
         isvesti_padalintus_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
+        cout << "Kietiakų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
         
     } else if (strategija == 2) {
         
         list<studentas> vargsiukai;
         list<studentas> grupe1 = grupe;
+        
+        laikas t1;
+        t1.reset();
         padalinimo_2_strategija(grupe1, vargsiukai, pagal_kuri_galutini);
+        cout << "Studentai padalinti į grupes " << t1.elapsed() << " sekundžių" << endl;
         
         pagal_ka_rusiuoti(vargsiukai, grupe1, pagal_kuri_galutini);
         
@@ -366,9 +379,12 @@ void padalinti_ir_isvesti_studentus(list<studentas>& grupe) {
             failas_kietiakai = "kietiakai_mediana.txt";
         }
         
+        t1.reset();
         isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        cout << "Vargsiukų failą išvedė per " << t1.elapsed() << " sekundžių" << endl;
+        t1.reset();
         isvesti_padalintus_i_faila(grupe1, failas_kietiakai, pagal_kuri_galutini);
-
+        cout << "Kietiakų failą išvedė per " << t1.elapsed() << " sekundžių" << endl;
     }
 }
 
