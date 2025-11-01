@@ -215,8 +215,8 @@ int pasirinkti_strategija() {
     int strategija = 0;
     while (true) {
         cout << "Pasirinkite studentų padalijimo strategiją: " << endl;
-        cout << "1 - Paprasta (pagal 5 ribą)" << endl;
-        cout << "2 - Efektyvesnė (rūšiavimas ir pop_back)" << endl;
+        cout << "1 - pirma strategija (du konteineriai)" << endl;
+        cout << "2 - antra strategija (vienas konteineris)" << endl;
 
         string pasirinkimas;
         cin >> pasirinkimas;
