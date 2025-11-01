@@ -109,9 +109,32 @@ Matuota:
 - Vidutiniais duomenų kiekiais (100 000 - 1 000 000 studentų) vektoriai pastebimai spartesni, ypač atliekant operacijas, kaip padalijimas ir rikiavimas.
 - Su dideliais duomenų kiekiais (10 000 000 studentų) vektoriai yra žymiai pranašesni - operacijos vyksta daug greičiau nei su sąrašais.
 
+## Rūšiavimo strategijų palyginimas
+
+- 1 strategija: Bendro studentai konteinerio (vector ir list tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų".
+- 2 strategija: Bendro studentų konteinerio (vector ir list) skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "vargšiukai".
 
 
+### Vector versija
 
+| Studentų skaičius | 1 strategija (s) |  2 strategija (s) | 
+|:-----------------:|:----------------:|:-----------------:|
+| 1 000             | 0.00045          | 0.00052           |
+| 10 000            | 0.00127          | 0.00356           |
+| 100 000           | 0.01596          | 0.08670           |
+| 1 000 000         | 0.08906          | 0.11815           |
+| 10 000 000        | 0.55538          | 1.81777           | 
+
+
+### List versija
+
+| Studentų skaičius | 1 strategija (s) |  2 strategija (s) | 
+|:-----------------:|:----------------:|:-----------------:|
+| 1 000             | 0.00082          | 0.00122           |
+| 10 000            | 0.00605          | 0.01890           |
+| 100 000           | 0.03761          | 0.05593           |
+| 1 000 000         | 0.19540          | 0.83532           |
+| 10 000 000        | 1.83842          | 14.4482           | 
 
 
 
