@@ -16,6 +16,8 @@ using std::invalid_argument;
 using std::fixed;
 using std::ostringstream;
 using std::setprecision;
+using std::partition;
+using std::make_move_iterator;
 
 
 void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis) {
@@ -180,6 +182,7 @@ void padalinimo_1_strategija(vector<studentas> &grupe, vector<studentas> &vargsi
 }
 
 
+
 void padalinimo_2_strategija(vector<studentas> &grupe, vector<studentas> &vargsiukai, int pagal_kuri_galutini){
     
     if (pagal_kuri_galutini == 1){
@@ -220,25 +223,44 @@ void padalinimo_2_strategija(vector<studentas> &grupe, vector<studentas> &vargsi
     }
 }
 
+void padalinimo_3_strategija(vector<studentas>& grupe, vector<studentas>& vargsiukai, vector<studentas>& kietiakai, int pagal_kuri_galutini ) {
+    
+    auto kriterijus = partition(grupe.begin(), grupe.end(), [pagal_kuri_galutini] (const studentas& s) {
+        if (pagal_kuri_galutini == 1) {
+            return s.galutinis_vidurkis < 5.0;
+        } else {
+            return s.galutinis_mediana < 5.0;
+        }
+    });
+    
+    vargsiukai.assign(make_move_iterator(grupe.begin()),
+    make_move_iterator(kriterijus));
+    kietiakai.assign(make_move_iterator(kriterijus),
+    make_move_iterator(grupe.end()));
+}
+
+
+
 int pasirinkti_strategija() {
     int strategija = 0;
     while (true) {
         cout << "Pasirinkite studentų padalijimo strategiją: " << endl;
         cout << "1 - pirma strategija (du konteineriai)" << endl;
         cout << "2 - antra strategija (vienas konteineris)" << endl;
+        cout << "3 - trečia strategija (optimizuota 1 strategija)" << endl;
 
         string pasirinkimas;
         cin >> pasirinkimas;
 
         try {
             strategija = stoi(pasirinkimas);
-            if (strategija < 1 || strategija > 2) {
-                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
+            if (strategija < 1 || strategija > 3) {
+                cout << "Neteisingas pasirinkimas. Įveskite 1 arba 3." << endl;
                 continue;
             }
             break;
         } catch (...) {
-            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 2." << endl;
+            cout << "Įvesta netinkama reikšmė. Įveskite 1 arba 3." << endl;
         }
     }
     return strategija;
@@ -409,6 +431,37 @@ void padalinti_ir_isvesti_studentus(vector<studentas>& grupe) {
         t1.reset();
         isvesti_padalintus_i_faila(grupe1, failas_kietiakai, pagal_kuri_galutini);
         cout << "Kietiakų failą išvedė per " << t1.elapsed() << " sekundžių" << endl;
+    } else {
+        
+        vector<studentas> grupe2 = grupe;
+        vector<studentas> kietiakai;
+        vector<studentas> vargsiukai;
+        
+        laikas t;
+        t.reset();
+        padalinimo_3_strategija(grupe2, vargsiukai, kietiakai, pagal_kuri_galutini);
+        cout << "Studentai padalinti į dvi grupes per " << t.elapsed() << " sekundžių" << endl;
+        
+        pagal_ka_rusiuoti(vargsiukai, kietiakai, pagal_kuri_galutini);
+        
+        string failas_vargsiukai;
+        string failas_kietiakai;
+
+        if (pagal_kuri_galutini == 1) {
+            failas_vargsiukai = "vargsiukai_vidurkis.txt";
+            failas_kietiakai = "kietiakai_vidurkis.txt";
+            
+        } else if (pagal_kuri_galutini == 2) {
+            failas_vargsiukai = "vargsiukai_mediana.txt";
+            failas_kietiakai = "kietiakai_mediana.txt";
+        }
+        
+        t.reset();
+        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        cout << "Vargsiukų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
+        t.reset();
+        isvesti_padalintus_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
+        cout << "Kietiakų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
     }
 }
 
