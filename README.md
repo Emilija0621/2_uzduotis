@@ -163,8 +163,7 @@ Matuota:
 
 ### Grafikas palyginimui:<br>
 
-<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/8dd3a310-37fa-4327-a2d7-05e859f54784" /><br>
-
+<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/fbe3afdb-1b73-42ac-b54b-559fba97d8ba" /> <br>
 
 ### List versija
 
@@ -178,7 +177,8 @@ Matuota:
 
 ### Grafikas palyginimui:<br>
 
-<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/aa6dc49c-9efc-41df-9c74-ba520a6b70e8" />
+<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/3050d226-d3aa-469b-9c15-076d0416b9f1" />
+
 
 
 
