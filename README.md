@@ -1,23 +1,56 @@
 # Projektas studentų pažymiai
 
+## Programos diegimo ir paleidimo instrukcija
+
+1. Atsisiųsti programos failus ir CMakeLists.txt
+2. Viską sudėti į aplanką "Studentai", Studentai aplanke turi būti:
+- Aplankas "Include" su visais header failais (pavadinimas.h)
+- Aplankas "src" su visais source failais (pavadinimas.cpp)
+- CMakeLists.txt
+3. Atsidaryti komandinę eilutę ir ten (ios operacinė sistema):
+- Nueiti į "Studentai" aplanko direktoriją (pvz. cd ~/Desktop/Studentai)
+- Eilutėje parašyti komandas:<br>
+  mkdir build <br>
+  cd build<br>
+  cmake ..<br>
+  make<br>
+- Tada paleisti programą su komanda: ./Studentai
+
+
 ## Trumpas projekto aprašymas:
 
-v.03 turi dvi programos versijas, jos skiriasi konteinerių tipu: viena veikia su list, kita su vector.
-Abi versijos skaičiuoja studentų galutinius įvertinimus:
+ši programa leidžia apskaičiuoti studentų galutinius įvertinimus:
+##### Galutinis = 0.4 * vidurkis(ND pažymių)/mediana(ND pažymių) + 0.6 * egzamino pažymys.
 
-#### Galutinis = 0.4 * vidurkis(ND pažymių)/mediana(ND pažymių) + 0.6 * egzamino pažymys.
+### Programos leidimai:
+
+- #### v0.1 versija:
+
+Programoje galima įvesti visus stuentų duomenis rankiniu būdu, atsitiktinai generuoti studentų pažymius, nuskaityti studentų duomenis iš failų bei atspausdinti studentus ir jų galutinius pažymius.
+
+- #### v0.2 versija:
+
+Patobulinta v0.1 versija: pridėta galimybė generuoti atsitiktinių studentų failus bei padalinti studentus į dvi kategorijas ("vargšiukai", "kietiakai"). Atlikta spartos analizė (žr. Studentų duomenų apdorojimo našumo analizė/Vector versija).
+
+- #### v0.3 versija:
+
+Patobulinta v.02 versija: dvi atskiros programos - viena su vector, kita su list. Atlikta spartos analizė (žr. Studentų duomenų apdorojimo našumo analizė/Vector versija, List versija).
+
+- #### v1.0 versija:
+
+Patobulinta v.03 versija: pridėtos 3 studentų padalinimo į dvi kategorijas ("vargšiukai", "kietiakai") strategijos. Atlikta spartos analizė (žr. Rūšiavimo strategijų palyginimas).
 
 ## Programos veikimo principas:
 
-- Vartotojui leidžia pasirinkti:
+- #### Vartotojui leidžia pasirinkti:
 
 <img width="688" height="141" alt="image" src="https://github.com/user-attachments/assets/7e947558-2eab-48d1-a0ba-b63f311145eb" /><br>
 
-- Vartotojui įvedus duomenis rankiniu būdu ekrane išvedamas objekto saugojimo atmintyje adresas:
+- #### Vartotojui įvedus duomenis rankiniu būdu ekrane išvedamas objekto saugojimo atmintyje adresas:
   
 <img width="374" height="18" alt="image" src="https://github.com/user-attachments/assets/04260ffa-a8c4-4b3a-a64d-234cdeee042a" /><br>
 
-- Spausdinant studentus leidžiama pasirinkti, pagal ką vartotojas nori skaičiuoti galutinį pažymį bei pagal ką išrikiuoti:
+- #### Spausdinant studentus leidžiama pasirinkti, pagal ką vartotojas nori skaičiuoti galutinį pažymį bei pagal ką išrikiuoti:
 
 <img width="437" height="69" alt="image" src="https://github.com/user-attachments/assets/4ad7ab62-5bdf-4397-90a1-1869a72ff2f7" /><br>
 
@@ -27,7 +60,7 @@ Atveju, kai vartotojas nori gauti skaičiavimus abejais būdais bei rikiavimą p
 
 <img width="364" height="55" alt="image" src="https://github.com/user-attachments/assets/f025de14-c6b5-478c-a3cc-370b1329032a" /><br>
 
-- Failas (pavadinimas.txt), iš kurio norima nuskaityti duomenis turi atrodyti taip:
+- #### Failas (pavadinimas.txt), iš kurio norima nuskaityti duomenis turi atrodyti taip:
 
 |  Vardas  |  Pavardė  | ND1 | ND2 | ND3 | ... | NDn | Egzaminas |
 |:--------:|:---------:|:---:|:---:|:---:|:---:|:---:|:---------:|
@@ -38,13 +71,15 @@ Atveju, kai vartotojas nori gauti skaičiavimus abejais būdais bei rikiavimą p
 <br>
 
 
-- Programa gali sugeneruoti 1 000, 10 000, 100 000, 1 000 000, 10 000 000 studentų įrašus, vartotojas pasirenka ar nori pats įvesti ND kiekį, ar jį sugeneruoti atsitiktinai (1-20 ND):<br>
+- #### Programa gali sugeneruoti 1 000, 10 000, 100 000, 1 000 000, 10 000 000 studentų įrašus, vartotojas pasirenka ar nori pats įvesti ND kiekį, ar jį sugeneruoti atsitiktinai (1-20 ND):<br>
 
 <img width="179" height="105" alt="image" src="https://github.com/user-attachments/assets/f8a81cc3-d7c8-4ac1-9756-0d72bf3d837c" /><br>
 
 <img width="291" height="56" alt="image" src="https://github.com/user-attachments/assets/aad2320a-2e11-4619-9f06-d399bdf14c7d" /><br>
 
--  Studentai į grupes padalinami pagal jų galutinį pažymį (galutinis balas < 5.0 yra “vargšiukai”, >= 5.0 yra “kietiakiai”). Išvedant studentus į failus leidžiama pasirinkti, pagal kurį galutinį pažymį norima juos padalinti bei pagal ką išrikiuoti:<br>
+-  #### Studentai į grupes padalinami pagal jų galutinį pažymį (galutinis balas < 5.0 yra “vargšiukai”, >= 5.0 yra “kietiakiai”). Išvedant studentus į failus leidžiama pasirinkti, pagal kurią strategiją, galutinį pažymį norima padalinti studentus bei pagal ką išrikiuoti:<br>
+
+<img width="366" height="73" alt="image" src="https://github.com/user-attachments/assets/bb38dfae-a983-4262-a847-d1e2927d4241" /><br>
 
 <img width="424" height="53" alt="image" src="https://github.com/user-attachments/assets/2b16f3db-1c36-4c25-8168-49115ac8a555" /><br>
 
@@ -79,7 +114,7 @@ Matuota:
 - Rikiavimo laikas (pagal galutinį pažymį)
 - Išvedimo į failus laikas
 
-### Rezultatai su vector:
+### Rezultatai su vector (v0.2, v0.3 versijos spartos analizė):
 
 | Studentų skaičius | Failo kūrimas (s) | Nuskaitymas (s) | Padalinimas (s) | Rikiavimas (s) | Išvedimas į failus (s) |
 |:-----------------:|:-----------------:|:---------------:|:---------------:|:--------------:|:----------------------:|
@@ -89,7 +124,7 @@ Matuota:
 | 1 000 000         | 1.2417            | 1.6133          | 0.088181        | 0.077788       | 0.08457                |
 | 10 000 000        | 12.449            | 16.435          | 0.599126        | 0.459601       | 1.07342                |
 
-### Rezultatai su list:
+### Rezultatai su list (v0.3 versijos spartos analizė):
 
 | Studentų skaičius | Failo kūrimas (s) | Nuskaitymas (s) | Padalinimas (s) | Rikiavimas (s) | Išvedimas į failus (s) |
 |:-----------------:|:-----------------:|:---------------:|:---------------:|:--------------:|:----------------------:|
@@ -109,32 +144,33 @@ Matuota:
 - Vidutiniais duomenų kiekiais (100 000 - 1 000 000 studentų) vektoriai pastebimai spartesni, ypač atliekant operacijas, kaip padalijimas ir rikiavimas.
 - Su dideliais duomenų kiekiais (10 000 000 studentų) vektoriai yra žymiai pranašesni - operacijos vyksta daug greičiau nei su sąrašais.
 
-## Rūšiavimo strategijų palyginimas
+## Rūšiavimo strategijų palyginimas (v1.0 spartos analizė)
 
 - 1 strategija: Bendro studentai konteinerio (vector ir list tipų) skaidymas (rūšiavimas) į du naujus to paties tipo konteinerius: "vargšiukų" ir "kietiakų".
 - 2 strategija: Bendro studentų konteinerio (vector ir list) skaidymas (rūšiavimas) panaudojant tik vieną naują konteinerį: "vargšiukai".
+- 3 strategija: Optimizuota 1 strategija.
 
 
 ### Vector versija
 
-| Studentų skaičius | 1 strategija (s) |  2 strategija (s) | 
-|:-----------------:|:----------------:|:-----------------:|
-| 1 000             | 0.00045          | 0.00052           |
-| 10 000            | 0.00127          | 0.00356           |
-| 100 000           | 0.01596          | 0.08670           |
-| 1 000 000         | 0.08906          | 0.11815           |
-| 10 000 000        | 0.55538          | 1.81777           | 
+| Studentų skaičius | 1 strategija (s) |  2 strategija (s) |  3 strategija (s) | 
+|:-----------------:|:----------------:|:-----------------:|:-----------------:|
+| 1 000             | 0.00045          | 0.00052           |                   |
+| 10 000            | 0.00127          | 0.00356           |                   |
+| 100 000           | 0.01596          | 0.08670           |                   |
+| 1 000 000         | 0.08906          | 0.11815           |                   |
+| 10 000 000        | 0.55538          | 1.81777           |                   |
 
 
 ### List versija
 
-| Studentų skaičius | 1 strategija (s) |  2 strategija (s) | 
-|:-----------------:|:----------------:|:-----------------:|
-| 1 000             | 0.00082          | 0.00122           |
-| 10 000            | 0.00605          | 0.01890           |
-| 100 000           | 0.03761          | 0.05593           |
-| 1 000 000         | 0.19540          | 0.83532           |
-| 10 000 000        | 1.83842          | 14.4482           | 
+| Studentų skaičius | 1 strategija (s) |  2 strategija (s) |  3 strategija (s) | 
+|:-----------------:|:----------------:|:-----------------:|:-----------------:|
+| 1 000             | 0.00082          | 0.00122           |                   |
+| 10 000            | 0.00605          | 0.01890           |                   |
+| 100 000           | 0.03761          | 0.05593           |                   |
+| 1 000 000         | 0.19540          | 0.83532           |                   |
+| 10 000 000        | 1.83842          | 14.4482           |                   |
 
 
 
