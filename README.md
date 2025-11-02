@@ -8,7 +8,7 @@
 - Aplankas "src" su visais source failais (pavadinimas.cpp)
 - CMakeLists.txt
 3. Atsidaryti komandinę eilutę ir ten (ios operacinė sistema):
-- Nueiti į "Studentai" aplanko direktoriją (pvz. cd ~/Desktop/Studentai)
+- Nueiti į aplanką "Studentai" (pvz. cd ~/Desktop/Studentai)
 - Eilutėje parašyti komandas:<br>
   mkdir build <br>
   cd build<br>
