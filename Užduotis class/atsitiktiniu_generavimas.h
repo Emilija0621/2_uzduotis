@@ -1,0 +1,6 @@
+#include<vector>
+
+using std::vector;
+
+int generuoti_atsitiktini_nd_kieki();
+int generuoti_atsitiktini_bala();
