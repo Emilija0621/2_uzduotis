@@ -15,14 +15,20 @@
 - Aplankas "Include" su visais header failais (pavadinimas.h)
 - Aplankas "src" su visais source failais (pavadinimas.cpp)
 - CMakeLists.txt
-3. Atsidaryti komandinę eilutę ir ten (ios operacinė sistema):
-- Nueiti į aplanką "Studentai" (pvz. cd ~/Desktop/Studentai)
-- Eilutėje parašyti komandas:<br>
-  mkdir build <br>
-  cd build<br>
-  cmake ..<br>
-  make<br>
-- Tada paleisti programą su komanda: ./Studentai
+
+3. Atidaryti komandinę eilutę (terminalą) ir pereiti į projekto aplanką, pvz.:
+- cd ~/Desktop/Studentai   (Unix / macOS / Linux)
+- cd C:\Users\Vartotojas\Desktop\Studentai  (Windows)
+
+4. Sukurti buid aplanką ir sukompiliuoti projektą: 
+- mkdir build  
+- cd build 
+- cmake .. 
+- make   (Unix / Linux / macOS, Windows su make palaikymu) 
+
+5. Paleisti programą:
+- ./Studentai   (Unix / macOS / Linux)
+- Studentai.exe  (Windows)
 
 
 ## Trumpas projekto aprašymas:
