@@ -177,7 +177,8 @@ Matuota:
 
 ### Grafikas palyginimui:<br>
 
-<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/d9ce9157-48c7-45d9-91d5-c71e314c4ef3" />
+<img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/eacaecd7-1c61-48a5-8790-d90c8c8abcf7" />
+
 
 
 
