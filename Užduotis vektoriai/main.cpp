@@ -15,7 +15,7 @@ using std::endl;
 using std::invalid_argument;
 
 int main() {
-    vector<studentas> grupe;
+    vector<Studentas> grupe;
     int pasirinkimas1;
 
     while (true) {
@@ -45,12 +45,16 @@ int main() {
         }
 
         if (pasirinkimas1 == 1) {
-            grupe.push_back(studentas_ivestis(false));
+            Studentas s;
+            s.readStudent(cin, false);
+            grupe.push_back(s);
             
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 2) {
-            grupe.push_back(studentas_ivestis(true));
+            Studentas s;
+            s.readStudent(cin, true);
+            grupe.push_back(s);
             
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
