@@ -11,7 +11,7 @@ using std::endl;
 using std::stringstream;
 using std::istringstream;
 
-void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studentas>& grupe){
+void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<Studentas>& grupe){
     ifstream in(failo_pavadinimas);
     if (!in.is_open()) {
         cout << "Nepavyko atidaryti failo: " << failo_pavadinimas << endl;
@@ -41,15 +41,22 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
         if (eilute.empty()) continue;
 
         istringstream iss(eilute);
-        studentas duomenys;
+        
+        Studentas duomenys;
+        string vardas;
+        string pavarde;
 
-        if (!(iss >> duomenys.vardas >> duomenys.pavarde)) {
+        if (!(iss >> vardas >> pavarde)) {
             cout << "Praleista eilutė " << eil_nr << "." << " (nerastas vardas/pavardė): " << eilute << endl;
             continue;
         }
+        
+        duomenys.setVardas(vardas);
+        duomenys.setPavarde(pavarde);
 
+        vector<int> nd_pazymiai;
+        
         bool klaida = false;
-        duomenys.pazymiai.clear();
 
         for (size_t i = 0; i < nd_kiekis; i++) {
             int nd;
@@ -58,18 +65,20 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<studen
                 klaida = true;
                 break;
             }
-            duomenys.pazymiai.push_back(nd);
+            nd_pazymiai.push_back(nd);
         }
 
         if (klaida) continue;
 
+        duomenys.setPazymiai(nd_pazymiai);
+        
         int egz;
         if (!(iss >> egz) || egz < 1 || egz > 10) {
             cout << "Praleista eilutė " << eil_nr << "." << " (netinkamai įvesti studento duomenys): " << eilute << endl;
             continue;
         }
-        duomenys.egzamino_pazymys = egz;
-
+        
+        duomenys.setEgzaminoPazymys(egz);
         grupe.push_back(duomenys);
     }
 
