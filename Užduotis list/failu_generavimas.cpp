@@ -16,7 +16,9 @@ using std::invalid_argument;
 using std::fixed;
 using std::ostringstream;
 using std::setprecision;
-using std::stable_partition;
+using std::partition;
+using std::make_move_iterator;
+
 
 
 
@@ -212,19 +214,21 @@ void padalinimo_2_strategija(list<studentas> &grupe, list<studentas> &vargsiukai
     }
 }
 
-void padalinimo_3_strategija(list<studentas>& grupe, list<studentas>& vargsiukai, list<studentas>& kietiakai, int pagal_kuri_galutini){
+void padalinimo_3_strategija(list<studentas>& grupe, list<studentas>& vargsiukai, list<studentas>& kietiakai, int pagal_kuri_galutini ) {
     
-    auto kriterijus = stable_partition(grupe.begin(), grupe.end(), [pagal_kuri_galutini](const studentas& s) {
-            if (pagal_kuri_galutini == 1)
-                return s.galutinis_vidurkis < 5.0;
-            else
-                return s.galutinis_mediana < 5.0;
-        });
+    auto kriterijus = partition(grupe.begin(), grupe.end(), [pagal_kuri_galutini] (const studentas& s) {
+        if (pagal_kuri_galutini == 1) {
+            return s.galutinis_vidurkis < 5.0;
+        } else {
+            return s.galutinis_mediana < 5.0;
+        }
+    });
     
-    vargsiukai.splice(vargsiukai.end(), grupe, grupe.begin(), kriterijus);
-    kietiakai.splice(kietiakai.end(), grupe, kriterijus, grupe.end());
+    vargsiukai.assign(make_move_iterator(grupe.begin()),
+    make_move_iterator(kriterijus));
+    kietiakai.assign(make_move_iterator(kriterijus),
+    make_move_iterator(grupe.end()));
 }
-
 
 
 int pasirinkti_strategija() {
