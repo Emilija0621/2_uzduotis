@@ -21,15 +21,19 @@ double skaiciuoti_vidurki(const vector<int>& pazymiai){
 }
 
 
-double skaiciuoti_mediana(vector<int> pazymiai){
+double skaiciuoti_mediana(const vector<int>& pazymiai){
+    
     if (pazymiai.empty()) return 0;
-    sort(pazymiai.begin(), pazymiai.end());
-    auto n = pazymiai.size();
+    
+    vector<int> pazymiai1 = pazymiai;
+    
+    sort(pazymiai1.begin(), pazymiai1.end());
+    auto n = pazymiai1.size();
 
     if (n % 2 == 1) {
-            return pazymiai[n / 2];
+            return pazymiai1[n / 2];
         } else {
-            return (pazymiai[n / 2 - 1] + pazymiai[n / 2]) / 2.0;
+            return (pazymiai1[n / 2 - 1] + pazymiai1[n / 2]) / 2.0;
         }
 }
 
@@ -45,7 +49,7 @@ double skaiciuoti_galutinis_pazymys(const vector<int>& pazymiai, int egzaminas, 
     return galutinis;
 }
 
-int galutiniai_pazymiai(vector<studentas>& grupe) {
+int galutiniai_pazymiai(vector<Studentas>& grupe) {
     if (grupe.empty()) {
         cout << "Studentų duomenų dar nėra." << endl;
         return 0;
@@ -71,9 +75,10 @@ int galutiniai_pazymiai(vector<studentas>& grupe) {
         }
     }
 
+    
     for (auto &s : grupe) {
-        s.galutinis_vidurkis = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, false);
-        s.galutinis_mediana = skaiciuoti_galutinis_pazymys(s.pazymiai, s.egzamino_pazymys, true);
+        s.set_galutinis_vidurkis(s.galutinis_balas(skaiciuoti_vidurki));
+        s.set_galutinis_mediana(s.galutinis_balas(skaiciuoti_mediana));
     }
 
     return pasirinkimas;
