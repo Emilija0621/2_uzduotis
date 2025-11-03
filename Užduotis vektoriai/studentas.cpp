@@ -1,56 +1,67 @@
 #include "studentas.h"
 #include "atsitiktiniu_generavimas.h"
+#include "skaiciavimai.h"
 #include<iostream>
 #include<cctype>
-
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
 using std::invalid_argument;
+using std::istream;
+using std::stoi;
 
 
-studentas studentas_ivestis(bool atsitiktiniai_balai){
+Studentas::Studentas(std::istream& is) {
+  readStudent(is);
+}
 
-    string ivestis;
-    studentas pirmas;
+double Studentas::galutinis_balas(double (*skaiciavimo_funkcija)(const vector<int>& pazymiai)) const {
+    if (skaiciavimo_funkcija) {
+        return skaiciavimo_funkcija(pazymiai_) * 0.4 + egzamino_pazymys_ * 0.6;
+    } else {
+        return 0;
+    }
+}
+
+istream& Studentas::readStudent(istream& is, bool atsitiktiniai_balai) {
     cout << "Įveskite studento duomenis." << endl;
-
     while (true){
-        cout << "Vardas: "; cin >> pirmas.vardas;
+        cout << "Vardas: "; is >> vardas_;
         bool tikriname = true;
-        for (char c: pirmas.vardas){
+        for (char c: vardas_){
             if(!isalpha(c)){
                 tikriname = false;
                 break;
             }
         }
         if(tikriname) break;
-                cout << "Vardas turi būti sudarytas tik iš raidžių." << endl;
+        cout << "Vardas turi būti sudarytas tik iš raidžių." << endl;
     }
-
+    
     while (true){
-        cout << "Pavardė: "; cin >> pirmas.pavarde;
+        cout << "Pavardė: "; is >> pavarde_;
         bool tikriname = true;
-        for (char c: pirmas.pavarde){
+        for (char c: pavarde_){
             if(!isalpha(c)){
                 tikriname = false;
                 break;
             }
         }
         if(tikriname) break;
-                cout << "Pavardė turi būti sudarytas tik iš raidžių." << endl;
+        cout << "Pavardė turi būti sudarytas tik iš raidžių." << endl;
     }
-
-    if (atsitiktiniai_balai){
-
+    
+    pazymiai_.clear();
+    
+    if (atsitiktiniai_balai) {
+        
         int kiek;
         while (true) {
             cout << "Kiek norite sugeneruoti pažymių? ";
             string ivestis;
             cin >> ivestis;
-
             try {
                 kiek = stoi(ivestis);
                 if (kiek < 1) {
@@ -58,56 +69,72 @@ studentas studentas_ivestis(bool atsitiktiniai_balai){
                     continue;
                 }
                 break;
-            } catch (const invalid_argument&) {
+            } catch (...) {
                 cout << "Įvesta netinkama reikšmė. Įveskite skaičių." << endl;
             }
         }
-
-            for (int i=0; i<kiek; i++){
-                pirmas.pazymiai.push_back(generuoti_atsitiktini_bala());
+        
+        for (int i = 0; i < kiek; i++){
+            pazymiai_.push_back(generuoti_atsitiktini_bala());
+        }
+        
+        egzamino_pazymys_ = generuoti_atsitiktini_bala();
+    } else {
+        
+        cout << "Įveskite studento pažymius (parašykite 'baigta', kai baigėte):" << endl;
+        string ivestis;
+        
+        while (true) {
+            cout << pazymiai_.size() + 1 << ". ";
+            is >> ivestis;
+            if (ivestis == "baigta"){
+                break;
             }
-
-            pirmas.egzamino_pazymys = generuoti_atsitiktini_bala();
-
-        } else {
-            cout << "įveskite studento pažymius (parašykite baigta, kai baigėte)"<< endl;
-
-            while (true){
-                cout << pirmas.pazymiai.size() + 1 << ". ";
-                cin >> ivestis;
-                if (ivestis == "baigta"){
-                    break;
+            try {
+                int konvertuota = stoi(ivestis);
+                if (konvertuota < 1 || konvertuota > 10){
+                    cout << "Balas turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
+                    continue;
                 }
-                try {
-                    int konvertuota = stoi(ivestis);
-                    if (konvertuota < 1 || konvertuota > 10) {
-                        cout << "Balas turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
-                        continue;
-                    }
-                    pirmas.pazymiai.push_back(konvertuota);
-                } catch (const invalid_argument&) {
-                    cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10 arba 'baigta'." << endl;
-                }
-            }
-
-            while (true) {
-                cout << "Įveskite egzamino pažymį: ";
-                string ivestis;
-                cin >> ivestis;
-
-                try {
-                    int egzaminas = stoi(ivestis);
-                    if (egzaminas < 1 || egzaminas > 10) {
-                        cout << "Egzamino pažymys turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
-                        continue;
-                    }
-                    pirmas.egzamino_pazymys = egzaminas;
-                    break;
-                } catch (const invalid_argument&) {
-                    cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10." << endl;
-                }
+                pazymiai_.push_back(konvertuota);
+            } catch (...) {
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10 arba 'baigta'." << endl;
             }
         }
-        return pirmas;
+        
+        while (true) {
+            cout << "Įveskite egzamino pažymį: ";
+            is >> ivestis;
+            try {
+                int egzaminas = stoi(ivestis);
+                if (egzaminas < 1 || egzaminas > 10) {
+                    cout << "Egzamino pažymys turi būti nuo 1 iki 10. Bandykite dar kartą." << endl;
+                    continue;
+                }
+                egzamino_pazymys_ = egzaminas;
+                break;
+            } catch (...) {
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 10." << endl;
+            }
+        }
+    }
+    return is;
+}
+
+
+bool comparePagalVidurki(const Studentas& a, const Studentas& b) {
+    return a.galutinis_vidurkis() > b.galutinis_vidurkis();
+}
+
+bool comparePagalMediana(const Studentas& a, const Studentas& b) {
+    return a.galutinis_mediana() > b.galutinis_mediana();
+}
+
+bool comparePagalPavarde(const Studentas& a, const Studentas& b) {
+    return a.pavarde() < b.pavarde();
+}
+
+bool comparePagalEgzamina(const Studentas& a, const Studentas& b) {
+    return a.egzamino_pazymys() > b.egzamino_pazymys();
 }
 
