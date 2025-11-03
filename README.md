@@ -2,6 +2,14 @@
 
 ## Programos diegimo ir paleidimo instrukcija
 
+### Reikalavimai:
+
+- C++ kompiliatorius (pvz., g++ 10+ arba Apple Clang 17+ su C++20 palaikymu)
+- CMake – projekto generavimo įrankis
+- make – kompiliavimo ir vykdomojo failo generavimo įrankis
+
+### Paleidimo žingsniai:
+
 1. Atsisiųsti programos failus ir CMakeLists.txt
 2. Viską sudėti į aplanką "Studentai", Studentai aplanke turi būti:
 - Aplankas "Include" su visais header failais (pavadinimas.h)
