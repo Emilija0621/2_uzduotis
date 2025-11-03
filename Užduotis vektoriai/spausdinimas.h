@@ -3,4 +3,4 @@
 
 using std::vector;
 
-void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas);
+void spausdinti_studentus(const vector<Studentas>& grupe, int pasirinkimas);
