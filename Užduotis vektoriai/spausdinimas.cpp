@@ -18,8 +18,8 @@ using std::fixed;
 using std::setprecision;
 
 
-void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
-    vector<studentas> surusiuota = grupe;
+void spausdinti_studentus(const vector<Studentas>& grupe, int pasirinkimas) {
+    vector<Studentas> surusiuota = grupe;
 
     int rikiavimo_pasirinkimas;
     while (true) {
@@ -45,21 +45,21 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
 
     if (rikiavimo_pasirinkimas == 1) {
         sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.vardas < b.vardas;
+            return a.vardas() < b.vardas();
         });
     } else if (rikiavimo_pasirinkimas == 2) {
         sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.pavarde < b.pavarde;
+            return a.pavarde() < b.pavarde();
         });
     } else if (rikiavimo_pasirinkimas == 3) {
 
         if (pasirinkimas == 1) {
             sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis > b.galutinis_vidurkis;
+                return a.galutinis_vidurkis() > b.galutinis_vidurkis();
             });
         } else if (pasirinkimas == 2) {
             sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana > b.galutinis_mediana;
+                return a.galutinis_mediana() > b.galutinis_mediana();
             });
         } else if (pasirinkimas == 3) {
 
@@ -86,11 +86,11 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
 
             if (kuris_rikiuoti == 1) {
                 sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_vidurkis > b.galutinis_vidurkis;
+                    return a.galutinis_vidurkis() > b.galutinis_vidurkis();
                 });
             } else {
                 sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_mediana > b.galutinis_mediana;
+                    return a.galutinis_mediana() > b.galutinis_mediana();
                 });
             }
         }
@@ -100,24 +100,24 @@ void spausdinti_studentus(const vector<studentas>& grupe, int pasirinkimas) {
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Vid.)" << endl;
         cout << string(46, '-') << endl;
         for (auto past: surusiuota){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << endl;
+            cout << setw(12) << left << past.vardas() << "|" << setw(15) << left << past.pavarde() << "|";
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis() << endl;
         }
 
     } else if (pasirinkimas == 2) {
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
         cout << string(46, '-') << endl;
         for (auto past: surusiuota){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(15) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+            cout << setw(12) << left << past.vardas() << "|" << setw(15) << left << past.pavarde() << "|";
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_mediana() << endl;
         }
 
     } else if (pasirinkimas == 3){
         cout << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(5) << left << "Galutinis (Vid.)" << "|" << setw(5) << left << "Galutinis (Med.)" << endl;
         cout << string(55, '-') << endl;
         for (auto past: surusiuota){
-            cout << setw(12) << left << past.vardas << "|" << setw(15) << left << past.pavarde << "|";
-            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis << "|" << setw(15) << fixed << setprecision(2) << past.galutinis_mediana << endl;
+            cout << setw(12) << left << past.vardas() << "|" << setw(15) << left << past.pavarde() << "|";
+            cout << setw(15) << fixed << setprecision(2) << past.galutinis_vidurkis() << "|" << setw(15) << fixed << setprecision(2) << past.galutinis_mediana() << endl;
         }
     }
 }
