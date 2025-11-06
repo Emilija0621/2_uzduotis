@@ -297,41 +297,25 @@ void pagal_ka_rusiuoti(vector<Studentas> &vargsiukai, vector<Studentas> &kietiak
     
     if (pagal_kokia_rusiuoti == 1) {
         
-        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-            return a.vardas() < b.vardas();
-        });
-        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-            return a.vardas() < b.vardas();
-        });
+        sort(vargsiukai.begin(), vargsiukai.end(), comparePagalVarda);
+        sort(kietiakai.begin(), kietiakai.end(), comparePagalVarda);
         
     } else if (pagal_kokia_rusiuoti == 2) {
         
-        sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-            return a.pavarde() < b.pavarde();
-        });
-        sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-            return a.pavarde() < b.pavarde();
-        });
+        sort(vargsiukai.begin(), vargsiukai.end(), comparePagalPavarde);
+        sort(kietiakai.begin(), kietiakai.end(), comparePagalPavarde);
         
     } else if (pagal_kokia_rusiuoti == 3) {
         
         if (pagal_kuri_galutini == 1) {
             
-            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis() > b.galutinis_vidurkis();
-            });
-            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis() > b.galutinis_vidurkis();
-            });
+            sort(vargsiukai.begin(), vargsiukai.end(), comparePagalVidurki);
+            sort(kietiakai.begin(), kietiakai.end(), comparePagalVidurki);
             
         } else {
             
-            sort(vargsiukai.begin(), vargsiukai.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana() > b.galutinis_mediana();
-            });
-            sort(kietiakai.begin(), kietiakai.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana() > b.galutinis_mediana();
-            });
+            sort(vargsiukai.begin(), vargsiukai.end(), comparePagalMediana);
+            sort(kietiakai.begin(), kietiakai.end(), comparePagalMediana);
         }
     }
     cout << "Rūšiavimas užtruko: " << t.elapsed() << " sekundžių" << endl;
@@ -344,11 +328,6 @@ void padalinti_ir_isvesti_studentus(vector<Studentas>& grupe) {
         return;
     }
 
-    for (auto &s : grupe) {
-        s.set_galutinis_vidurkis(s.galutinis_balas(skaiciuoti_vidurki));
-        s.set_galutinis_mediana(s.galutinis_balas(skaiciuoti_mediana));
-    }
-    
     int strategija = pasirinkti_strategija();
     
     int pagal_kuri_galutini;
