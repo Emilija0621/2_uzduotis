@@ -79,6 +79,7 @@ void nuskaityti_duomenis_is_failo(const string& failo_pavadinimas, vector<Studen
         }
         
         duomenys.setEgzaminoPazymys(egz);
+        duomenys.apskaiciuotiGalutinius();
         grupe.push_back(duomenys);
     }
 
