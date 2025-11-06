@@ -194,34 +194,96 @@ Matuota:
 <img width="785" height="415" alt="image" src="https://github.com/user-attachments/assets/eacaecd7-1c61-48a5-8790-d90c8c8abcf7" />
 
 
+## v1.1
+
+Buvo testuojama (analizė buvo atlikta su vector):
+- Studentų padalinimas į grupes (3 strategija)
+- 1 000 000, 10 000 000 studentų failų kūrimas
+- 1 000 000, 10 000 000 studentų failų nuskaitymas
+  
+
+## Struct ir class spartos analizė
+
+### Struct
+ 
+| Studentų skaičius |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:-----------------:|:--------------------:|:----------------------:|:------------------------:|
+| 1 000 000         | 1.2417               | 1.6133                 | 0.0320                   |                
+| 10 000 000        | 12.449               | 16.435                 | 0.2325                   |
+
+### Class
+ 
+| Studentų skaičius |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:-----------------:|:--------------------:|:----------------------:|:------------------------:|
+| 1 000 000         | 1.2234               | 1.6704                 | 0.0539                   |                
+| 10 000 000        | 12.369               | 16.963                 | 0.4458                   |
+
+### Išvados:
+- Struct ir Class versijų našumas yra labai panašus, tačiau pagrindinis skirtumas išryškėja padalijimo į grupes etape.
+- Failo kūrimo ir nuskaitymo laikai abiejose versijose beveik sutampa — skirtumai minimalūs.
+- Padalijimo į grupes metu klasės versija veikia maždaug 2 kartus lėčiau.
 
 
+## Struct ir class spartos analizė pagal optimizavimo lygi
+
+### Struct
+
+#### Studentų skaičius - 1 000 000 
+
+| Optimizavimo lygis |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:------------------:|:--------------------:|:----------------------:|:------------------------:|
+| O0                 | 1.2417               | 1.6133                 | 0.0320                   |             
+| O1                 | 1.2135               | 1.5972                 | 0.0277                   |
+| O2                 | 1.1913               | 1.5637                 | 0.0246                   |
+| O3                 | 1.1837               | 1.5810                 | 0.02379                  |
+
+#### Studentų skaičius - 10 000 000
+
+| Optimizavimo lygis |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:------------------:|:--------------------:|:----------------------:|:------------------------:|
+| O0                 | 12.449               | 16.435                 | 0.2325                   |     
+| O1                 | 11.909               | 16.014                 | 0.2198                   |
+| O2                 | 11.744               | 15.930                 | 0.2096                   |
+| O3                 | 11.700               | 16.018                 | 0.2034                   |
+
+| Optimizavimo lygis | Vykdomojo failo dydis (KB) |
+|:------------------:|:--------------------------:|
+| O0                 | 430                        |
+| O1                 | 224                        |
+| O2                 | 143                        |
+| O3                 | 142                        |
 
 
+### Class
+
+#### Studentų skaičius - 1 000 000 
+
+| Optimizavimo lygis |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:------------------:|:--------------------:|:----------------------:|:------------------------:|
+| O0                 | 1.2234               | 1.6704                 | 0.0539                   |          
+| O1                 | 1.1873               | 1.6611                 | 0.0378                   |
+| O2                 | 1.1905               | 1.6179                 | 0.0361                   |
+| O3                 | 1.1903               | 1.5896                 | 0.0359                   |
+
+#### Studentų skaičius - 10 000 000
+
+| Optimizavimo lygis |  Failo sukūrimas (s) |  Failo nuskaitymas (s) | Padalijimas į grupes (s) |
+|:------------------:|:--------------------:|:----------------------:|:------------------------:|
+| O0                 | 12.369               | 16.963                 | 0.4458                   |
+| O1                 | 11.659               | 16.878                 | 0.3873                   |
+| O2                 | 11.532               | 16.732                 | 0.3451                   |
+| O3                 | 11.841               | 16.655                 | 0.3373                   |
+
+| Optimizavimo lygis | Vykdomojo failo dydis (KB) |
+|:------------------:|:--------------------------:|
+| O0                 | 254                        |
+| O1                 | 121                        |
+| O2                 | 121                        |
+| O3                 | 120                        |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Išvados:
+- Aukštesnis optimizacijos lygis efektyviai mažina laiką ir failo dydį, bet didžiausią poveikį turi pereinant nuo O0 prie O1/O2.
 
 
 
