@@ -44,23 +44,15 @@ void spausdinti_studentus(const vector<Studentas>& grupe, int pasirinkimas) {
     }
 
     if (rikiavimo_pasirinkimas == 1) {
-        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.vardas() < b.vardas();
-        });
+        sort(surusiuota.begin(), surusiuota.end(), comparePagalVarda);
     } else if (rikiavimo_pasirinkimas == 2) {
-        sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-            return a.pavarde() < b.pavarde();
-        });
+        sort(surusiuota.begin(), surusiuota.end(), comparePagalPavarde);
     } else if (rikiavimo_pasirinkimas == 3) {
 
         if (pasirinkimas == 1) {
-            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_vidurkis() > b.galutinis_vidurkis();
-            });
+            sort(surusiuota.begin(), surusiuota.end(), comparePagalVidurki);
         } else if (pasirinkimas == 2) {
-            sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                return a.galutinis_mediana() > b.galutinis_mediana();
-            });
+            sort(surusiuota.begin(), surusiuota.end(), comparePagalMediana);
         } else if (pasirinkimas == 3) {
 
             int kuris_rikiuoti = 0;
@@ -85,13 +77,9 @@ void spausdinti_studentus(const vector<Studentas>& grupe, int pasirinkimas) {
             }
 
             if (kuris_rikiuoti == 1) {
-                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_vidurkis() > b.galutinis_vidurkis();
-                });
+                sort(surusiuota.begin(), surusiuota.end(), comparePagalVidurki);
             } else {
-                sort(surusiuota.begin(), surusiuota.end(), [](auto &a, auto &b){
-                    return a.galutinis_mediana() > b.galutinis_mediana();
-                });
+                sort(surusiuota.begin(), surusiuota.end(), comparePagalMediana);
             }
         }
     }
