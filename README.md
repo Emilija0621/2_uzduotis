@@ -224,9 +224,9 @@ Buvo testuojama (analizė buvo atlikta su vector):
 
 
 ### Išvados:
-- Struct ir Class versijų našumas yra labai panašus, tačiau pagrindinis skirtumas išryškėja padalijimo į grupes etape.
+- Struct ir Class versijų našumas yra labai panašus, tačiau pagrindinis skirtumas išryškėja po padalinimo etapo.
 - Failo kūrimo ir nuskaitymo laikai abiejose versijose beveik sutampa — skirtumai minimalūs.
-- Padalijimo į grupes metu klasės versija veikia maždaug 2 kartus lėčiau.
+- Rikiavimo, išvedimo į grupes metu klasės versija veikia žymiai lėčiau.
 
 
 ## Struct ir class spartos analizė pagal optimizavimo lygi
