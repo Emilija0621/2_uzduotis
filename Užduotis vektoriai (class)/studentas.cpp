@@ -13,17 +13,15 @@ using std::istream;
 using std::stoi;
 
 
-Studentas::Studentas(std::istream& is) {
-  readStudent(is);
+Studentas::Studentas(istream& is, bool atsitiktiniai_balai) {
+  readStudent(is, atsitiktiniai_balai);
 }
 
-double Studentas::galutinis_balas(double (*skaiciavimo_funkcija)(const vector<int>& pazymiai)) const {
-    if (skaiciavimo_funkcija) {
-        return skaiciavimo_funkcija(pazymiai_) * 0.4 + egzamino_pazymys_ * 0.6;
-    } else {
-        return 0;
-    }
+void Studentas::apskaiciuotiGalutinius() {
+    galutinis_vidurkis_ = skaiciuoti_galutinis_pazymys(pazymiai_, egzamino_pazymys_, false);
+    galutinis_mediana_ = skaiciuoti_galutinis_pazymys(pazymiai_, egzamino_pazymys_, true);
 }
+
 
 istream& Studentas::readStudent(istream& is, bool atsitiktiniai_balai) {
     cout << "Įveskite studento duomenis." << endl;
@@ -61,7 +59,7 @@ istream& Studentas::readStudent(istream& is, bool atsitiktiniai_balai) {
         while (true) {
             cout << "Kiek norite sugeneruoti pažymių? ";
             string ivestis;
-            cin >> ivestis;
+            is >> ivestis;
             try {
                 kiek = stoi(ivestis);
                 if (kiek < 1) {
@@ -118,8 +116,11 @@ istream& Studentas::readStudent(istream& is, bool atsitiktiniai_balai) {
             }
         }
     }
+    apskaiciuotiGalutinius();
     return is;
 }
+
+
 
 
 bool comparePagalVidurki(const Studentas& a, const Studentas& b) {
@@ -134,7 +135,9 @@ bool comparePagalPavarde(const Studentas& a, const Studentas& b) {
     return a.pavarde() < b.pavarde();
 }
 
-bool comparePagalEgzamina(const Studentas& a, const Studentas& b) {
-    return a.egzamino_pazymys() > b.egzamino_pazymys();
+bool comparePagalVarda(const Studentas& a, const Studentas& b) {
+    return a.vardas() < b.vardas();
 }
+
+
 
