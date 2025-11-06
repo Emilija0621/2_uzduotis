@@ -74,13 +74,6 @@ int galutiniai_pazymiai(vector<Studentas>& grupe) {
             cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 3." << endl;
         }
     }
-
-    
-    for (auto &s : grupe) {
-        s.set_galutinis_vidurkis(s.galutinis_balas(skaiciuoti_vidurki));
-        s.set_galutinis_mediana(s.galutinis_balas(skaiciuoti_mediana));
-    }
-
     return pasirinkimas;
 }
 
