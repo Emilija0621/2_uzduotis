@@ -197,27 +197,29 @@ Matuota:
 ## v1.1
 
 Buvo testuojama (analizė buvo atlikta su vector):
+- 100 000, 1 000 000 studentų failų kūrimas
+- 100 000, 1 000 000 studentų failų nuskaitymas
 - Studentų padalinimas į grupes (3 strategija)
-- 1 000 000, 10 000 000 studentų failų kūrimas
-- 1 000 000, 10 000 000 studentų failų nuskaitymas
+- Rikiavimas
+- Išvedimas į failus
   
 
 ## Struct ir class spartos analizė
 
 ### Struct
  
-| Studentų skaičius | Failo sukūrimas (s) | Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
-|:-----------------:|:-------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
-| 1 000 000         | 1.2417              | 1.6133          |  0.0777         | 0.0320          | 0.0845                 |        
-| 10 000 000        | 12.449              | 16.435          |  0.4596         | 0.2325          | 1.0734                 |
+| Studentų skaičius | Failo kūrimas (s) | Nuskaitymas (s) | Padalinimas (s) | Rikiavimas (s) | Išvedimas į failus (s) |
+|:-----------------:|:-----------------:|:---------------:|:---------------:|:--------------:|:----------------------:|
+| 100 000           | 0.1394            | 0.1726          | 0.0083          | 0.0128         | 0.0213                 |
+| 1 000 000         | 1.2417            | 1.6133          | 0.0881          | 0.0777         | 0.0845                 |
 
 ### Class
 
- 
-| Studentų skaičius | Failo sukūrimas (s) | Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
-|:-----------------:|:-------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
-| 1 000 000         | 1.2234              | 1.6704          | 0.7184          | 0.2667          | 0.1474                 |        
-| 10 000 000        | 12.369              | 16.963          |                 | 0.4458          |                        |
+| Studentų skaičius | Failo kūrimas (s) | Nuskaitymas (s) | Padalinimas (s) | Rikiavimas (s) | Išvedimas į failus (s) |
+|:-----------------:|:-----------------:|:---------------:|:---------------:|:--------------:|:----------------------:|
+| 100 000           | 0.1322            | 0.2173          | 0.0453          | 0.1157         | 0.1129                 |
+| 1 000 000         | 1.2234            | 1.6704          | 0.0986          | 0.2188         | 0.1895                 |
+
 
 
 
@@ -231,23 +233,25 @@ Buvo testuojama (analizė buvo atlikta su vector):
 
 ### Struct
 
-#### Studentų skaičius - 1 000 000 
+#### Studentų skaičius - 100 000
 
-| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
+| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) | Padalijimas (s) | Rikiavimas (s)  | Išvedimas į failus (s) |
 |:------------------:|:--------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
-| O0                 | 1.2417               | 1.6133          |  0.0777         | 0.0320          | 0.0845                 |            
-| O1                 | 1.2135               | 1.5972          |  0.0707         | 0.0277          | 0.0807                 |
-| O2                 | 1.1913               | 1.5637          |  0.0652         | 0.0246          | 0.0865                 |
-| O3                 | 1.1837               | 1.5810          |  0.0565         | 0.0237          | 0.0843                  |
+| O0                 | 0.1394               | 0.1726          | 0.0083          | 0.0128          | 0.0213                 |          
+| O1                 | 0.1363               | 0.1687          | 0.0076          | 0.0119          | 0.0198                 |
+| O2                 | 0.1335               | 0.1647          | 0.0072          | 0.0113          | 0.0189                 |
+| O3                 | 0.1319               | 0.1626          | 0.0070          | 0.0111          | 0.0182                 |
 
-#### Studentų skaičius - 10 000 000
 
-| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
+#### Studentų skaičius - 1 000 000
+
+| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) | Padalijimas (s) |  Rikiavimas (s) | Išvedimas į failus (s) |
 |:------------------:|:--------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
-| O0                 | 12.449               | 16.435          |  0.4596         | 0.2325          | 1.0734                 |    
-| O1                 | 11.909               | 16.014          |  0.4407         | 0.2198          | 0.9082                 |
-| O2                 | 11.744               | 15.930          |  0.5126         | 0.2096          | 0.9609                 |
-| O3                 | 11.700               | 16.018          |  0.5110         | 0.2034          | 0.9137                 |
+| O0                 | 1.2417               | 1.6133          |  0.0320         | 0.0777          | 0.0845                 |            
+| O1                 | 1.2135               | 1.5972          |  0.0277         | 0.0707          | 0.0807                 |
+| O2                 | 1.1913               | 1.5637          |  0.0246         | 0.0652          | 0.0865                 |
+| O3                 | 1.1837               | 1.5810          |  0.0237         | 0.0565          | 0.0843                 |
+
 
 | Optimizavimo lygis | Vykdomojo failo dydis (KB) |
 |:------------------:|:--------------------------:|
@@ -259,23 +263,24 @@ Buvo testuojama (analizė buvo atlikta su vector):
 
 ### Class
 
-#### Studentų skaičius - 1 000 000 
+#### Studentų skaičius - 100 000
 
-| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
+| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) | Padalijimas (s) | Rikiavimas (s)  | Išvedimas į failus (s) |
 |:------------------:|:--------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
-| O0                 | 1.2234               | 1.6704          |  0.7184         | 0.2667          | 0.1474                 |          
-| O1                 | 1.1873               | 1.6611          |                 |                 |                        |
-| O2                 | 1.1905               | 1.6179          |                 |                 |                        |
-| O3                 | 1.1903               | 1.5896          |                 |                 |                        |
+| O0                 | 0.1322               | 0.2173          | 0.0453          | 0.1157          | 0.1129                 |
+| O1                 | 0.1237               | 0.2160          | 0.0442          | 0.1148          | 0.1123                 |   
+| O2                 | 0.1241               | 0.2153          | 0.0448          | 0.1139          | 0.1117                 |   
+| O3                 | 0.1238               | 0.2115          | 0.0443          | 0.1134          | 0.1112                 |   
 
-#### Studentų skaičius - 10 000 000
+#### Studentų skaičius - 1 000 000
 
-| Optimizavimo lygis |  Failo sukūrimas (s) |  Nuskaitymas (s) |  Rikiavimas (s) | Padalijimas (s) | Išvedimas į failus (s) |
-|:------------------:|:--------------------:|:----------------:|:---------------:|:---------------:|:----------------------:|
-| O0                 | 12.369               | 16.963           |                 |                 |                       |
-| O1                 | 11.659               | 16.878           |                 |                 |                       |
-| O2                 | 11.532               | 16.732           |                 |                 |                       |
-| O3                 | 11.841               | 16.655           |                 |                 |                       |
+| Optimizavimo lygis |  Failo sukūrimas (s) | Nuskaitymas (s) | Padalijimas (s) | Rikiavimas (s)  | Išvedimas į failus (s) |
+|:------------------:|:--------------------:|:---------------:|:---------------:|:---------------:|:----------------------:|
+| O0                 | 1.2234               | 1.6704          | 0.0986          | 0.2188          | 0.1895                 |
+| O1                 | 1.1873               | 1.6611          | 0.0963          | 0.2135          | 0.1857                 |
+| O2                 | 1.1905               | 1.6179          | 0.0942          | 0.2108          | 0.1853                 |
+| O3                 | 1.1903               | 1.5896          | 0.0925          | 0.2097          | 0.1844                 |                        
+
 
 | Optimizavimo lygis | Vykdomojo failo dydis (KB) |
 |:------------------:|:--------------------------:|
