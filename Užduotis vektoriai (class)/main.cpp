@@ -3,16 +3,16 @@
 #include "spausdinimas.h"
 #include "failu_skaitymas.h"
 #include "failu_generavimas.h"
+#include "laikas.h"
 #include<iostream>
 #include<vector>
 #include<string>
-#include "laikas.h"
-
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::invalid_argument;
+
 
 int main() {
     vector<Studentas> grupe;
@@ -47,6 +47,8 @@ int main() {
         if (pasirinkimas1 == 1) {
             Studentas s;
             s.readStudent(cin, false);
+//            Galimas operatoriaus panaudojimas
+//            cin >> s;
             grupe.push_back(s);
             
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
@@ -59,9 +61,111 @@ int main() {
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
 
         } else if (pasirinkimas1 == 3) {
-
+            
             int pasirinkimas = galutiniai_pazymiai(grupe);
-            spausdinti_studentus(grupe, pasirinkimas);
+            int kur1;
+            
+            if (pasirinkimas != 0) {
+                
+                while (true) {
+                    cout << "Kur norite išvesti duomenis?" << endl;
+                    cout << "1 - Į konsolę" << endl;
+                    cout << "2 - Į failą" << endl;
+
+                    string kur;
+                    cin >> kur;
+
+                    try {
+                        kur1 = stoi(kur);
+
+                        if (kur1 < 1 || kur1 > 2) {
+                            cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 2." << endl;
+                            continue;
+                        }
+                        break;
+
+                    } catch (const invalid_argument&) {
+                        cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 2." << endl;
+                    }
+                }
+                if (kur1 == 1){
+                    spausdinti_studentus(grupe, pasirinkimas);
+                } else {
+                    string failo_pav;
+                    cout << "Įveskite failo pavadinimą: ";
+                    cin >> failo_pav;
+
+                    vector<Studentas> surusiuota = grupe;
+
+                    int rikiavimo_pasirinkimas;
+
+                    while (true) {
+                        cout << "Pagal ką norite rikiuoti studentus prieš išvedant į failą?" << endl;
+                        cout << "1 - Pagal vardą" << endl;
+                        cout << "2 - Pagal pavardę" << endl;
+                        cout << "3 - Pagal galutinį pažymį" << endl;
+
+                        string rinktis;
+                        cin >> rinktis;
+
+                        try {
+                            rikiavimo_pasirinkimas = stoi(rinktis);
+                            if (rikiavimo_pasirinkimas < 1 || rikiavimo_pasirinkimas > 3) {
+                                cout << "Neteisingas pasirinkimas. Įveskite 1-3." << endl;
+                                continue;
+                            }
+                            break;
+                        } catch (...) {
+                            cout << "Įvesta netinkama reikšmė. Bandykite dar kartą." << endl;
+                        }
+                    }
+
+                    if (rikiavimo_pasirinkimas == 1) {
+                        sort(surusiuota.begin(), surusiuota.end(), comparePagalVarda);
+
+                    } else if (rikiavimo_pasirinkimas == 2) {
+                        sort(surusiuota.begin(), surusiuota.end(), comparePagalPavarde);
+
+                    } else if (rikiavimo_pasirinkimas == 3) {
+
+                        if (pasirinkimas == 1) {
+                            sort(surusiuota.begin(), surusiuota.end(), comparePagalVidurki);
+
+                        } else if (pasirinkimas == 2) {
+                            sort(surusiuota.begin(), surusiuota.end(), comparePagalMediana);
+
+                        } else if (pasirinkimas == 3) {
+
+                            int kuris;
+                            while (true) {
+                                cout << "Pasirinkite pagal kurį galutinį pažymį rikiuoti:" << endl;
+                                cout << "1 - Pagal vidurkį" << endl;
+                                cout << "2 - Pagal medianą" << endl;
+
+                                string t;
+                                cin >> t;
+
+                                try {
+                                    kuris = stoi(t);
+                                    if (kuris < 1 || kuris > 2) {
+                                        cout << "Neteisingas pasirinkimas. Įveskite 1 arba 2." << endl;
+                                        continue;
+                                    }
+                                    break;
+                                } catch (...) {
+                                    cout << "Įvesta netinkama reikšmė. Bandykite dar kartą." << endl;
+                                }
+                            }
+
+                            if (kuris == 1)
+                                sort(surusiuota.begin(), surusiuota.end(), comparePagalVidurki);
+                            else
+                                sort(surusiuota.begin(), surusiuota.end(), comparePagalMediana);
+                        }
+                    }
+                    isvesti_i_faila(surusiuota, failo_pav, pasirinkimas);
+                }
+            }
 
         } else if (pasirinkimas1 == 4) {
             cout << "Įveskite failo pavadinimą: ";
