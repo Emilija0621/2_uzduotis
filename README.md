@@ -293,9 +293,89 @@ Buvo testuojama (analizė buvo atlikta su vector):
 ### Išvados:
 - Aukštesnis optimizacijos lygis efektyviai mažina laiką ir failo dydį, bet didžiausią poveikį turi pereinant nuo O0 prie O1/O2.
 
+## v1.2
 
+Realizuoti visi "Rule of three" ir įvesties/išvesties operatoriai bei atliktas įvesties ir išvesties metodų perdengimas.
 
+### Rule of three
 
+#### 1. Kopijavimo konstruktorius
 
+``` bash
+Studentas(const Studentas& stud)
+    : vardas_(stud.vardas_),
+      pavarde_(stud.pavarde_),
+      pazymiai_(stud.pazymiai_),
+      egzamino_pazymys_(stud.egzamino_pazymys_),
+      galutinis_vidurkis_(stud.galutinis_vidurkis_),
+      galutinis_mediana_(stud.galutinis_mediana_) 
+{}
+```
 
+#### 2. Priskyrimo operatorius (copy assignment)
 
+``` bash
+Studentas& operator=(const Studentas& stud) {
+        if (this == &stud)
+            return *this;
+        
+        Studentas laikinas(stud);
+        swap(vardas_, laikinas.vardas_);
+        swap(pavarde_, laikinas.pavarde_);
+        swap(pazymiai_, laikinas.pazymiai_);
+        swap(egzamino_pazymys_, laikinas.egzamino_pazymys_);
+        swap(galutinis_vidurkis_, laikinas.galutinis_vidurkis_);
+        swap(galutinis_mediana_, laikinas.galutinis_mediana_);
+        return *this;
+    }
+```
+
+#### 3. Destruktorius
+
+``` bash
+~Studentas(){
+        vardas_.clear();
+        pavarde_.clear();
+        pazymiai_.clear();
+        
+        egzamino_pazymys_ = 0;
+        galutinis_mediana_ = 0.0;
+        galutinis_vidurkis_ = 0.0;
+    }
+```
+
+### Įvesties/išvesties operatorių perdengimas
+
+- #### Įvesties operatorius `operator>>`
+
+``` bash
+friend istream& operator>>(istream& is, Studentas& s);
+```
+Operatorius `>>` leidžia patogiai įvesti studento duomenis. Vartotojas įveda vardą, pavardę, namų darbų pažymius ir egzamino balą. Visos reikšmės tikrinamos, o suvedus duomenis automatiškai apskaičiuojami galutiniai balai.
+
+#### Panaudojimas programoje
+
+``` bash
+// Alternatyvus įvedimo būdas (vietoje readStudent)
+cin >> s;
+```
+
+- #### Išvesties operatorius `operator<<`
+
+``` bash
+friend ostream& operator<<(ostream& os, const Studentas& s);
+```
+
+Operatorius `<<` išveda studento informaciją tvarkingu, stulpeliniu formatu. Atvaizduojamas vardas, pavardė, galutinis balas pagal vidurkį ir pagal medianą. Naudojami formatavimo įrankiai (setw, left, setprecision) aiškiam rezultatų pateikimui.
+
+#### Panaudojimas programoje
+
+``` bash
+// Išvedant duomenis į failą
+buferis << s << endl;
+```
+
+``` bash
+// Išvedant duomenis į ekraną
+cout << s << endl;
+```
