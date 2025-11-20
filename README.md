@@ -30,6 +30,25 @@
 - ./Studentai   (Unix / macOS / Linux)
 - Studentai.exe  (Windows)
 
+### Analogiškai galima naudoti runme.sh (Unix / macOS / Linux)
+
+1. Atsisiųsti programos failus, CMakeLists.txt ir runme.sh
+  
+2. Viską sudėti į aplanką "Studentai", Studentai aplanke turi būti:
+- Aplankas "Include" su visais header failais (pavadinimas.h)
+- Aplankas "src" su visais source failais (pavadinimas.cpp)
+- CMakeLists.txt
+- runme.sh
+
+3. Atidaryti komandinę eilutę (terminalą) ir pereiti į projekto aplanką, pvz.:
+- cd ~/Desktop/Studentai 
+
+4. Įsitikinti, kad failas yra vykdomas:
+- chmod +x runme.sh
+
+5. Paleisti programą:
+- ./runme.sh
+
 
 ## Trumpas projekto aprašymas:
 
