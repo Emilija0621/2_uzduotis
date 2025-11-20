@@ -25,11 +25,18 @@ public:
     Studentas() : egzamino_pazymys_(0), galutinis_vidurkis_(0), galutinis_mediana_(0){}
     Studentas(istream& is, bool atsitiktiniai_balai);
     
-    //Kopijavimo konstruktorius
+    //Kopijavimo konstruktorius (copy constructor)
     Studentas(const Studentas& stud)
-    : vardas_(stud.vardas_), pavarde_(stud.pavarde_), pazymiai_(stud.pazymiai_), egzamino_pazymys_(stud.egzamino_pazymys_), galutinis_vidurkis_(stud.galutinis_vidurkis_), galutinis_mediana_(stud.galutinis_mediana_) {}
+        : vardas_(stud.vardas_),
+          pavarde_(stud.pavarde_),
+          pazymiai_(stud.pazymiai_),
+          egzamino_pazymys_(stud.egzamino_pazymys_),
+          galutinis_vidurkis_(stud.galutinis_vidurkis_),
+          galutinis_mediana_(stud.galutinis_mediana_)
+    {}
+
     
-    //Kopijavimo operatorius
+    //Priskyrimo operatorius (copy assignment)
     Studentas& operator=(const Studentas& stud) {
         if (this == &stud)
             return *this;
@@ -44,7 +51,7 @@ public:
         return *this;
     }
     
-    //Destruktorius
+    //Destruktorius (destructor)
     ~Studentas(){
         vardas_.clear();
         pavarde_.clear();
@@ -69,9 +76,9 @@ public:
     
     istream& readStudent(istream&, bool atsitiktiniai_balai = false);
     
-    //Isvesties operatorius
-    friend istream& operator>>(istream& is, Studentas& s);
     //Ivesties operatorius
+    friend istream& operator>>(istream& is, Studentas& s);
+    //Isvesties operatorius
     friend ostream& operator<<(ostream& os, const Studentas& s);
     
 };
@@ -80,3 +87,6 @@ bool comparePagalMediana(const Studentas&, const Studentas&);
 bool comparePagalVidurki(const Studentas&, const Studentas&);
 bool comparePagalVarda(const Studentas&, const Studentas&);
 bool comparePagalPavarde(const Studentas&, const Studentas&);
+
+
+
