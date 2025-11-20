@@ -1,6 +1,6 @@
 #include "failu_generavimas.h"
 #include "skaiciavimai.h"
-#include "atsitiktiniu_generavimas.h"
+#include "funkcijos.h"
 #include<fstream>
 #include<iostream>
 #include<iomanip>
@@ -18,6 +18,9 @@ using std::ostringstream;
 using std::setprecision;
 using std::partition;
 using std::make_move_iterator;
+using std::left;
+using std::setw;
+
 
 
 void sugeneruoti_faila(const string& failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis) {
@@ -375,10 +378,10 @@ void padalinti_ir_isvesti_studentus(vector<Studentas>& grupe) {
         }
         
         t.reset();
-        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        isvesti_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
         cout << "Vargsiukų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
         t.reset();
-        isvesti_padalintus_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
+        isvesti_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
         cout << "Kietiakų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
         
     } else if (strategija == 2) {
@@ -405,10 +408,10 @@ void padalinti_ir_isvesti_studentus(vector<Studentas>& grupe) {
             failas_kietiakai = "kietiakai_mediana.txt";
         }
         t1.reset();
-        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        isvesti_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
         cout << "Vargsiukų failą išvedė per " << t1.elapsed() << " sekundžių" << endl;
         t1.reset();
-        isvesti_padalintus_i_faila(grupe1, failas_kietiakai, pagal_kuri_galutini);
+        isvesti_i_faila(grupe1, failas_kietiakai, pagal_kuri_galutini);
         cout << "Kietiakų failą išvedė per " << t1.elapsed() << " sekundžių" << endl;
     } else {
         
@@ -436,31 +439,46 @@ void padalinti_ir_isvesti_studentus(vector<Studentas>& grupe) {
         }
         
         t.reset();
-        isvesti_padalintus_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
+        isvesti_i_faila(vargsiukai, failas_vargsiukai, pagal_kuri_galutini);
         cout << "Vargsiukų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
         t.reset();
-        isvesti_padalintus_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
+        isvesti_i_faila(kietiakai, failas_kietiakai, pagal_kuri_galutini);
         cout << "Kietiakų failą išvedė per " << t.elapsed() << " sekundžių" << endl;
     }
 }
 
 
 
-void isvesti_padalintus_i_faila(const vector<Studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
-
+void isvesti_i_faila(const vector<Studentas>& grupe, const string& failo_pavadinimas, int pagal_kuri_galutini) {
+    
     ostringstream buferis;
 
     if (pagal_kuri_galutini == 1) {
-        buferis << "Vardas Pavarde Galutinis_pažymys(vidurkis)\n";
+        buferis << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(15) << left << "Galutinis (Vid.)" << endl;
+        buferis << string(45, '-') << endl;
+        
         for (auto &s : grupe) {
-            buferis << s.vardas() << " " << s.pavarde() << " " << fixed << setprecision(2) << s.galutinis_vidurkis() << "\n";
+            buferis << setw(12) << left << s.vardas() << "|" << setw(15) << left << s.pavarde() << "|" << setw(15) << fixed << setprecision(2) << s.galutinis_vidurkis() << endl;
         }
-    } else {
-        buferis << "Vardas Pavarde Galutinis_pažymys(mediana)\n";
+        
+    } else if (pagal_kuri_galutini == 2) {
+        buferis << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(15) << left << "Galutinis (Med.)" << endl;
+        buferis << string(45, '-') << endl;
+        
         for (auto &s : grupe) {
-            buferis << s.vardas() << " " << s.pavarde() << " " << fixed << setprecision(2) << s.galutinis_mediana() << "\n";
+            buferis << setw(12) << left << s.vardas() << "|" << setw(15) << left << s.pavarde() << "|" << setw(15) << fixed << setprecision(2) << s.galutinis_mediana() << endl;
+        }
+        
+    } else if (pagal_kuri_galutini == 3){
+        buferis << setw(12) << left << "Vardas" << "|" << setw(15) << left << "Pavardė" << "|" << setw(15) << left << "Galutinis (Vid.)" << "|" << setw(15) << left << "Galutinis (Med.)" << endl;
+        buferis << string(61, '-') << endl;
+        
+        for (const auto& s : grupe) {
+//          Isvesties operatoriaus panaudojimas
+            buferis << s << endl;
         }
     }
+
 
     ofstream out(failo_pavadinimas);
     if (!out.is_open()) {
@@ -472,6 +490,11 @@ void isvesti_padalintus_i_faila(const vector<Studentas>& grupe, const string& fa
     out.close();
     cout << "Išvestas failas: " << failo_pavadinimas << endl;
 }
+
+
+
+
+
 
 
 
