@@ -143,6 +143,42 @@ istream& Studentas::readStudent(istream& is, bool atsitiktiniai_balai) {
 }
 
 
+void rule_of_three() {
+    cout << "--------- Rule of three testas ---------\n\n";
+
+    Studentas s1, s2;
+
+    cin >> s1;
+    cout << "Ivedete studenta s1." << endl;
+
+    cin >> s2;
+    cout << "Ivedete studenta s2" << endl;
+
+    cout << "--- Pradiniai studentu duomenys ---" << endl;
+
+    cout << left << setw(10) << "Nr"<< setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(18) << "Galutinis (Vid.)" << setw(18) << "Galutinis (Med.)" << endl;
+    cout << string(76, '-') << endl;
+
+    cout << left << setw(10) << "s1" << setw(15) << s1.vardas() << setw(15) << s1.pavarde() << setw(18) << fixed << setprecision(2) << s1.galutinis_vidurkis()<< setw(18) << fixed << setprecision(2) << s1.galutinis_mediana() << endl;
+
+    cout << left << setw(10) << "s2"<< setw(15) << s2.vardas()<< setw(15) << s2.pavarde()<< setw(18) << fixed << setprecision(2) << s2.galutinis_vidurkis()<< setw(18) << fixed << setprecision(2) << s2.galutinis_mediana() << endl << endl;
+    
+    cout << "Patikriname ar studentu duomenys sutampa (s1 == s2): " << (s1 == s2 ? "True" : "False") << endl << endl;
+
+    cout << "Pakeiciame studenta s2 i s1 (s2 = s1)." << endl << endl;
+    s2 = s1;
+
+    cout << "Patikriname ar studentu duomenys sutampa (s1 == s2): " << (s1 == s2 ? "True" : "False") << endl << endl;
+
+    cout << "Sukuriam nauja studenta s4 is s1 (s4(s1))." << endl << endl;
+    Studentas s3(s1);
+
+    cout << "Patikriname ar studentu duomenys sutampa (s1 == s4): " << (s1 == s3 ? "True" : "False") << endl << endl;
+
+    cout << "-------------- Testo pabaiga --------------"<< endl;
+}
+
+
 bool comparePagalVidurki(const Studentas& a, const Studentas& b) {
     return a.galutinis_vidurkis() > b.galutinis_vidurkis();
 }
