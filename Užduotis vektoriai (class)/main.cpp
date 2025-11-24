@@ -27,20 +27,21 @@ int main() {
             cout << "4 - Nuskaityti studentų duomenis iš failo" << endl;
             cout << "5 - Atsitiktinai generuoti studentų duomenis į failus" << endl;
             cout << "6 - Padalinti studentus į dvi grupes (vargšiukai ir kietiakai) ir išvesti į atskirus failus" << endl;
-            cout << "7 - Išeiti" << endl;
+            cout << "7 - Patikrinti rule of three veikima" << endl;
+            cout << "8 - Išeiti" << endl;
 
             string ivestis;
             cin >> ivestis;
 
             try {
                 pasirinkimas1 = stoi(ivestis);
-                if (pasirinkimas1 < 1 || pasirinkimas1 > 7) {
-                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 7." << endl;
+                if (pasirinkimas1 < 1 || pasirinkimas1 > 8) {
+                    cout << "Neteisingas pasirinkimas. Įveskite skaičių nuo 1 iki 8." << endl;
                     continue;
                 }
                 break;
             } catch (const invalid_argument&) {
-                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 7." << endl;
+                cout << "Įvesta netinkama reikšmė. Įveskite skaičių nuo 1 iki 8." << endl;
             }
         }
 
@@ -48,7 +49,7 @@ int main() {
             Studentas s;
             s.readStudent(cin, false);
 //            Galimas operatoriaus panaudojimas
-//            cin >> s;
+//            cin >> s ;
             grupe.push_back(s);
             
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
@@ -186,9 +187,11 @@ int main() {
             padalinti_ir_isvesti_studentus(grupe);
 
         } else if (pasirinkimas1 == 7) {
+            rule_of_three();
+
+        } else if (pasirinkimas1 == 8){
             cout << "Programa baigta." << endl;
             break;
-
         } else {
             cout << "Neteisingas pasirinkimas." << endl;
         }
