@@ -77,13 +77,15 @@ Patobulinta v.03 versija: pridėtos 3 studentų padalinimo į dvi kategorijas ("
 
 - #### Vartotojui leidžia pasirinkti:
 
-<img width="688" height="141" alt="image" src="https://github.com/user-attachments/assets/7e947558-2eab-48d1-a0ba-b63f311145eb" /><br>
+<img width="690" height="156" alt="image" src="https://github.com/user-attachments/assets/9a94bb24-0300-4082-9ed8-6be13249c225" /><br>
 
 - #### Vartotojui įvedus duomenis rankiniu būdu ekrane išvedamas objekto saugojimo atmintyje adresas:
   
 <img width="374" height="18" alt="image" src="https://github.com/user-attachments/assets/04260ffa-a8c4-4b3a-a64d-234cdeee042a" /><br>
 
-- #### Spausdinant studentus leidžiama pasirinkti, pagal ką vartotojas nori skaičiuoti galutinį pažymį bei pagal ką išrikiuoti:
+- #### Spausdinant studentus leidžiama pasirinkti, kur vartotojas nori išvesti duomenis, pagal ką skaičiuoti galutinį pažymį bei pagal ką išrikiuoti:
+
+<img width="214" height="55" alt="image" src="https://github.com/user-attachments/assets/1d432a82-5f64-4f1a-8fe4-fb464b37ab59" /><br>
 
 <img width="437" height="69" alt="image" src="https://github.com/user-attachments/assets/4ad7ab62-5bdf-4397-90a1-1869a72ff2f7" /><br>
 
@@ -123,6 +125,12 @@ Pasirinkus studentus padalinti pagal galutinį pažymį (skaičiuojamas su vidur
 Pasirinkus studentus padalinti pagal galutinį pažymį (skaičiuojamas su mediana):<br>
 
 <img width="431" height="69" alt="image" src="https://github.com/user-attachments/assets/1969c469-ff51-4f4b-9bb3-bc87086179a9" /><br>
+
+- #### Vartotojas gali patikrinti "Rule of three" veikimą: <br>
+
+Rezultato pavyzdys:<br>
+
+<img width="576" height="263" alt="image" src="https://github.com/user-attachments/assets/ef108ccf-548a-4fea-8175-99ea8fdf2d85" /><br>
 
 ## Studentų duomenų apdorojimo našumo analizė
 
