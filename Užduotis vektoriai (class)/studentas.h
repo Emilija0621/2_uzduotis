@@ -88,5 +88,7 @@ bool comparePagalVidurki(const Studentas&, const Studentas&);
 bool comparePagalVarda(const Studentas&, const Studentas&);
 bool comparePagalPavarde(const Studentas&, const Studentas&);
 
+void rule_of_three();
+
 
 
