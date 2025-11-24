@@ -38,10 +38,10 @@ public:
     
     //Priskyrimo operatorius (copy assignment)
     Studentas& operator=(const Studentas& stud) {
+        Studentas laikinas(stud);
         if (this == &stud)
             return *this;
         
-        Studentas laikinas(stud);
         swap(vardas_, laikinas.vardas_);
         swap(pavarde_, laikinas.pavarde_);
         swap(pazymiai_, laikinas.pazymiai_);
