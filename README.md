@@ -410,7 +410,7 @@ cout << s << endl;
 ## v1.5
 
 - Sukurta bazinė (abstrakti) klasė `Žmogus`.
--
+- Iš jos sukuriama išvestinė (derived) klasė `Studentas`.
 
 #### Klasė Zmogus
 ``` bash
