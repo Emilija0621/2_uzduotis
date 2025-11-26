@@ -7,14 +7,20 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include <type_traits>
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::invalid_argument;
-
+using std::is_abstract;
+using std::boolalpha;
 
 int main() {
+    cout << boolalpha;
+    cout << "Zmogus abstrakti? "<< is_abstract<Zmogus>::value << endl;
+    cout << "Studentas abstrakti? " << is_abstract<Studentas>::value << endl;
+
     vector<Studentas> grupe;
     int pasirinkimas1;
 
@@ -27,7 +33,7 @@ int main() {
             cout << "4 - Nuskaityti studentų duomenis iš failo" << endl;
             cout << "5 - Atsitiktinai generuoti studentų duomenis į failus" << endl;
             cout << "6 - Padalinti studentus į dvi grupes (vargšiukai ir kietiakai) ir išvesti į atskirus failus" << endl;
-            cout << "7 - Patikrinti rule of three veikima" << endl;
+            cout << "7 - Patikrinti Rule of three veikimą" << endl;
             cout << "8 - Išeiti" << endl;
 
             string ivestis;
