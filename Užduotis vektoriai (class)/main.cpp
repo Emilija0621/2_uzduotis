@@ -7,7 +7,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
-#include <type_traits>
+#include<type_traits>
 
 using std::cout;
 using std::cin;
