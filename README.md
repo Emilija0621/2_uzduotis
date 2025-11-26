@@ -406,3 +406,60 @@ buferis << s << endl;
 // Išvedant duomenis į ekraną
 cout << s << endl;
 ```
+
+## v1.5
+
+- Sukurta bazinė (abstrakti) klasė `Žmogus`.
+-
+
+#### Klasė Zmogus
+``` bash
+class Zmogus {
+protected:
+    string vardas_;
+    string pavarde_;
+
+public:
+    Zmogus() : vardas_(""), pavarde_("") {}
+    Zmogus(const string& v, const string& p) : vardas_(v), pavarde_(p) {}
+
+    virtual string vardas() const = 0;
+    virtual string pavarde() const = 0;
+
+    virtual ~Zmogus() {
+        vardas_.clear();
+        pavarde_.clear();
+    }
+};
+```
+
+#### Klasė Studentas
+``` bash
+class Studentas: public Zmogus {...}
+```
+
+### Patikrinimas, ar klasė Žmogus yra abstrakti.
+
+- #### Sukurtos bazinės (abstrakčios) klasės Žmogus objektų kūrimas (`Zmogus z;`) yra negalimas.
+
+Metama klaida: <br>
+
+<img width="203" height="38" alt="image" src="https://github.com/user-attachments/assets/079aa6f7-22ab-4cd3-bea6-34bdb1a9cedb" /> <br>
+
+
+- #### Naudojant `std::is_abstract<Zmogus>::value` patikrinama, ar Zmogus yra abstrakti klasė. <br>
+
+Grąžina rezultatą: <br>
+
+<img width="203" height="38" alt="image" src="https://github.com/user-attachments/assets/9c7c08ed-5548-43d9-80e4-90be8b82c8b5" />
+
+
+
+
+
+
+
+
+
+
+ 
