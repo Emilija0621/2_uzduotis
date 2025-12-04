@@ -468,8 +468,33 @@ macOS pvz: open index.html
 Dokumentacija atrodo taip:
 <img width="1279" height="634" alt="image" src="https://github.com/user-attachments/assets/84457b79-5931-4aaa-ab64-74f8acd16269" />
 
+### Unit tests 
 
+Projekte naudojame Google Test, kad automatiškai tikrintume funkcijų ir klasės elgseną. Testai apima:
+- Skaičiavimus: skaiciuoti_vidurki, skaiciuoti_mediana, skaiciuoti_galutinis_pazymys
+- Studentas klasės metodus: duomenų nustatymą ir gavimą (set / get), galutinio balo skaičiavimą (apskaiciuotiGalutinius)
+- Objektų kopijavimą: kopijavimo konstruktorius ir priskyrimo operatorius
 
+Unit testus paleisti galima pagal Programos diegimo ir paleidimo instrukciją, pasirinkus veiksmą 2 (unit_tests).
+
+Testų pavyzdžiai: <br>
+``` bash
+TEST(SkaiciavimaiTest, Vidurkis) {
+    vector<int> pazymiai = {6, 8, 10};
+    // (6 + 8 + 10) / 3 = 24 / 3 = 8
+    EXPECT_DOUBLE_EQ(skaiciuoti_vidurki(pazymiai), 8.0);
+}
+
+TEST(SkaiciavimaiTest, MedianaLyginis) {
+    vector<int> pazymiai = {9, 3, 7, 5};
+    // Rikiuota: 3, 5, 7, 9
+    // (5 + 7) / 2 = 12 / 2 = 6
+    EXPECT_DOUBLE_EQ(skaiciuoti_mediana(pazymiai), 6.0);
+}
+```
+Visų testų rezultatas: <br>
+
+<img width="406" height="348" alt="image" src="https://github.com/user-attachments/assets/512a8666-afeb-4f31-94b5-28046f259692" />
 
 
 
