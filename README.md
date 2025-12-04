@@ -73,6 +73,22 @@ Patobulinta v.02 versija: dvi atskiros programos - viena su vector, kita su list
 
 Patobulinta v.03 versija: pridėtos 3 studentų padalinimo į dvi kategorijas ("vargšiukai", "kietiakai") strategijos. Atlikta spartos analizė (žr. Rūšiavimo strategijų palyginimas).
 
+- #### v1.1 versija:
+
+Patobulinta v1.0 versija: Studentas struktūros vietoje buvo sukurta Studentas klasė, o visas kodas buvo pritaikytas darbui su naująja klase. Atlikta spartumo analizė, palyginant struktūrą ir klasę, naudojant vieną fiksuotą konteinerį, didelius failus ir skirtingus kompiliatoriaus optimizavimo lygius (O1, O2, O3).
+
+- #### v1.2 versija:
+
+Patobulinta v1.1 versija: realizuota "Rule of three" ir įvesties/išvesties operatoriai.
+
+- #### v1.5 versija:
+
+Patobulinta v1.2 versija: sukurta abstrakti bazinė klasė Zmogus, iš kurios paveldima klasė Studentas.
+
+- #### v2.0 versija:
+
+Patobulinta v1.5 versija: sukurta Doxygen dokumentacija, realizuoti keli demonstraciniai Unit testai.
+
 ## Programos veikimo principas:
 
 - #### Vartotojui leidžia pasirinkti:
