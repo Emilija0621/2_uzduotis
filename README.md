@@ -1,4 +1,4 @@
-# Projektas studentų pažymiai
+# Užduotis studentų pažymiai
 
 ## Programos diegimo ir paleidimo instrukcija
 
