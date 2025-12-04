@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['setegzaminopazymys_0',['setEgzaminoPazymys',['../class_studentas.html#a0e282630d4e84e2d0c96fa406fbbd459',1,'Studentas']]],
+  ['setpavarde_1',['setPavarde',['../class_studentas.html#a1694149ac00b747c845884614d77970c',1,'Studentas']]],
+  ['setpazymiai_2',['setPazymiai',['../class_studentas.html#ad154bdfd57eb72b6eac900e1a3e4c739',1,'Studentas']]],
+  ['setvardas_3',['setVardas',['../class_studentas.html#a05199b0b20b04356ecb150285ee1292a',1,'Studentas']]],
+  ['skaiciavimai_2ecpp_4',['skaiciavimai.cpp',['../skaiciavimai_8cpp.html',1,'']]],
+  ['skaiciavimai_2eh_5',['skaiciavimai.h',['../skaiciavimai_8h.html',1,'']]],
+  ['skaiciuoti_5fgalutinis_5fpazymys_6',['skaiciuoti_galutinis_pazymys',['../skaiciavimai_8cpp.html#ad07af6dc5d1c293d318979adf091b06a',1,'skaiciuoti_galutinis_pazymys(const vector&lt; int &gt; &amp;pazymiai, int egzaminas, bool naudoti_mediana):&#160;skaiciavimai.cpp'],['../skaiciavimai_8h.html#a169bfb9b7ad8fb3b1ce6a64bc6d0653d',1,'skaiciuoti_galutinis_pazymys(const vector&lt; int &gt; &amp;pazymiai, int egzaminas, bool naudoti_mediana=false):&#160;skaiciavimai.cpp']]],
+  ['skaiciuoti_5fmediana_7',['skaiciuoti_mediana',['../skaiciavimai_8cpp.html#a8ec5b92886fae83e300fb902bc5353fe',1,'skaiciuoti_mediana(const vector&lt; int &gt; &amp;pazymiai):&#160;skaiciavimai.cpp'],['../skaiciavimai_8h.html#a8ec5b92886fae83e300fb902bc5353fe',1,'skaiciuoti_mediana(const vector&lt; int &gt; &amp;pazymiai):&#160;skaiciavimai.cpp']]],
+  ['skaiciuoti_5fvidurki_8',['skaiciuoti_vidurki',['../skaiciavimai_8cpp.html#a66f2fcbe9d5d0e563633313220166ff4',1,'skaiciuoti_vidurki(const vector&lt; int &gt; &amp;pazymiai):&#160;skaiciavimai.cpp'],['../skaiciavimai_8h.html#a66f2fcbe9d5d0e563633313220166ff4',1,'skaiciuoti_vidurki(const vector&lt; int &gt; &amp;pazymiai):&#160;skaiciavimai.cpp']]],
+  ['spausdinimas_2ecpp_9',['spausdinimas.cpp',['../spausdinimas_8cpp.html',1,'']]],
+  ['spausdinimas_2eh_10',['spausdinimas.h',['../spausdinimas_8h.html',1,'']]],
+  ['spausdinti_5fstudentus_11',['spausdinti_studentus',['../spausdinimas_8cpp.html#a336fe1b615fb6211ffe90895494c4e55',1,'spausdinti_studentus(const vector&lt; Studentas &gt; &amp;grupe, int pasirinkimas):&#160;spausdinimas.cpp'],['../spausdinimas_8h.html#a336fe1b615fb6211ffe90895494c4e55',1,'spausdinti_studentus(const vector&lt; Studentas &gt; &amp;grupe, int pasirinkimas):&#160;spausdinimas.cpp']]],
+  ['start_12',['start',['../classlaikas.html#a4f0af75ec917012b2648d9de593d047b',1,'laikas']]],
+  ['studentas_13',['Studentas',['../class_studentas.html',1,'Studentas'],['../class_studentas.html#ab459e995e8c9b24cdc9aec5b09a66539',1,'Studentas::Studentas()'],['../class_studentas.html#acfbec6541117e5125a67b2984a86483b',1,'Studentas::Studentas(istream &amp;is, bool atsitiktiniai_balai)'],['../class_studentas.html#af10e21a8512770f18df1eb1a04f054a3',1,'Studentas::Studentas(const Studentas &amp;stud)']]],
+  ['studentas_2ecpp_14',['studentas.cpp',['../studentas_8cpp.html',1,'']]],
+  ['studentas_2eh_15',['studentas.h',['../studentas_8h.html',1,'']]],
+  ['sugeneruoti_5ffaila_16',['sugeneruoti_faila',['../failu__generavimas_8cpp.html#aaee9c67ff4cfd260e06ecbd5f98c8dc1',1,'sugeneruoti_faila(const string &amp;failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis):&#160;failu_generavimas.cpp'],['../failu__generavimas_8h.html#aaee9c67ff4cfd260e06ecbd5f98c8dc1',1,'sugeneruoti_faila(const string &amp;failo_pavadinimas, int studentu_kiekis, int nd_pazymiu_kiekis):&#160;failu_generavimas.cpp']]]
+];
