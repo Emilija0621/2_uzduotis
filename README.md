@@ -452,7 +452,7 @@ Grąžina rezultatą: <br>
 ## v2.0
 
 - sukurta Doxygen dokumentacija.
-- realizuoti unit testai.
+- realizuoti Unit testai.
 
 ### Doxygen dokumentacija
 
