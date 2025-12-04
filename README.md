@@ -26,8 +26,8 @@
 5. Paleisti programą:
 - ./runme.sh
 
-6. Pasirinkti veiksmą:
-Įveskite 1 – paleidžiama pagrindinė programa (studentas_programa)
+6. Pasirinkti veiksmą: <br>
+Įveskite 1 – paleidžiama pagrindinė programa (studentas_programa) <br>
 Įveskite 2 – paleidžiami unit testai (unit_tests)
 
 ## Trumpas projekto aprašymas:
