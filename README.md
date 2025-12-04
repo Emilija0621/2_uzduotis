@@ -8,18 +8,17 @@
 - CMake – projekto generavimo įrankis
 - make – kompiliavimo ir vykdomojo failo generavimo įrankis
 
-### Paleidimo žingsniai:
+### Paleidimo žingsniai (Unix / macOS / Linux):
 
 1. Atsisiųsti programos failus, test_studentas.cpp, CMakeLists.txt ir runme.sh.
 2. Viską sudėti į aplanką "studentai", studentai aplanke turi būti:
 - visi programos failai
 - CMakeLists.txt
 - runme.sh
-- aplankalas "tests", kuriame yra test_studentas.cpp.
+- aplankas "tests", kuriame yra test_studentas.cpp.
 
 3. Atidaryti komandinę eilutę (terminalą) ir pereiti į projekto aplanką, pvz.:
-- cd ~/Desktop/studentai   (Unix / macOS / Linux)
-- cd C:\Users\Vartotojas\Desktop\studentai  (Windows)
+- cd ~/Desktop/studentai
 
 4. Įsitikinti, kad failas yra vykdomas:
 - chmod +x runme.sh
@@ -450,6 +449,24 @@ Grąžina rezultatą: <br>
 
 <img width="203" height="38" alt="image" src="https://github.com/user-attachments/assets/9c7c08ed-5548-43d9-80e4-90be8b82c8b5" />
 
+## v2.0
+
+- sukurta Doxygen dokumentacija.
+- realizuoti unit testai.
+
+### Doxygen dokumentacija
+
+Sukurta HTML dokumentacija naudojant Doxygen, kuri aprašo visas klases, metodus, funkcijas bei jų atsakomybes ir paveldėjimo struktūrą. Dokumentacija sugeneruota iš visų .h ir .cpp failų su pridėtais komentarais.
+
+Norint peržiūrėti dokumentaciją:
+- Įsitikinkite, kad atsisiųstas aplankas html
+- Terminale pereikite į html katalogą: <br>
+macOS pvz: cd ~/Desktop/html
+- Atidarykite index.html naršyklėje: <br>
+macOS pvz: open index.html
+
+Dokumentacija atrodo taip:
+<img width="1279" height="634" alt="image" src="https://github.com/user-attachments/assets/84457b79-5931-4aaa-ab64-74f8acd16269" />
 
 
 
