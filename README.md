@@ -461,9 +461,9 @@ Sukurta HTML dokumentacija naudojant Doxygen, kuri aprašo visas klases, metodus
 Norint peržiūrėti dokumentaciją:
 - Įsitikinkite, kad atsisiųstas aplankas html
 - Terminale pereikite į html katalogą: <br>
-macOS pvz: cd ~/Desktop/html
+macOS pvz: ``` cd ~/Desktop/html ```
 - Atidarykite index.html naršyklėje: <br>
-macOS pvz: open index.html
+macOS pvz: ``` open index.html ```
 
 Dokumentacija atrodo taip:
 <img width="1279" height="634" alt="image" src="https://github.com/user-attachments/assets/84457b79-5931-4aaa-ab64-74f8acd16269" />
