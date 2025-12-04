@@ -53,9 +53,8 @@ int main() {
 
         if (pasirinkimas1 == 1) {
             Studentas s;
-            s.readStudent(cin, false);
-//            Galimas operatoriaus panaudojimas
-//            cin >> s ;
+            // naudojamas operatorius >>
+            cin >> s ;
             grupe.push_back(s);
             
             cout << "Studento objektas saugomas adresu: " << &grupe.back() << endl;
@@ -202,4 +201,5 @@ int main() {
             cout << "Neteisingas pasirinkimas." << endl;
         }
     }
+    return 0;
 }
