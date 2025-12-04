@@ -10,38 +10,16 @@
 
 ### Paleidimo žingsniai:
 
-1. Atsisiųsti programos failus ir CMakeLists.txt
-2. Viską sudėti į aplanką "Studentai", Studentai aplanke turi būti:
-- Aplankas "Include" su visais header failais (pavadinimas.h)
-- Aplankas "src" su visais source failais (pavadinimas.cpp)
-- CMakeLists.txt
-
-3. Atidaryti komandinę eilutę (terminalą) ir pereiti į projekto aplanką, pvz.:
-- cd ~/Desktop/Studentai   (Unix / macOS / Linux)
-- cd C:\Users\Vartotojas\Desktop\Studentai  (Windows)
-
-4. Sukurti buid aplanką ir sukompiliuoti projektą: 
-- mkdir build  
-- cd build 
-- cmake .. 
-- make   (Unix / Linux / macOS, Windows su make palaikymu) 
-
-5. Paleisti programą:
-- ./Studentai   (Unix / macOS / Linux)
-- Studentai.exe  (Windows)
-
-### Analogiškai galima naudoti runme.sh (Unix / macOS / Linux)
-
-1. Atsisiųsti programos failus, CMakeLists.txt ir runme.sh
-  
-2. Viską sudėti į aplanką "Studentai", Studentai aplanke turi būti:
-- Aplankas "Include" su visais header failais (pavadinimas.h)
-- Aplankas "src" su visais source failais (pavadinimas.cpp)
+1. Atsisiųsti programos failus, test_studentas.cpp, CMakeLists.txt ir runme.sh.
+2. Viską sudėti į aplanką "studentai", studentai aplanke turi būti:
+- visi programos failai
 - CMakeLists.txt
 - runme.sh
+- aplankalas "tests", kuriame yra test_studentas.cpp.
 
 3. Atidaryti komandinę eilutę (terminalą) ir pereiti į projekto aplanką, pvz.:
-- cd ~/Desktop/Studentai 
+- cd ~/Desktop/studentai   (Unix / macOS / Linux)
+- cd C:\Users\Vartotojas\Desktop\studentai  (Windows)
 
 4. Įsitikinti, kad failas yra vykdomas:
 - chmod +x runme.sh
@@ -49,6 +27,9 @@
 5. Paleisti programą:
 - ./runme.sh
 
+6. Pasirinkti veiksmą:
+Įveskite 1 – paleidžiama pagrindinė programa (studentas_programa)
+Įveskite 2 – paleidžiami unit testai (unit_tests)
 
 ## Trumpas projekto aprašymas:
 
